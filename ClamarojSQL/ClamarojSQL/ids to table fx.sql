@@ -1,10 +1,12 @@
 GO
+USE Clamaroj
 /****** Object:  UserDefinedFunction [dbo].[fxConvertIDsToTable]    Script Date: 03/08/2023 11:42:05 a. m. ******/
+GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER FUNCTION [dbo].[fxConvertIDsToTable](@Indices AS VARCHAR(MAX))
+create FUNCTION [dbo].[fxConvertIDsToTable](@Indices AS VARCHAR(MAX))
 RETURNS @rTable TABLE (IdReturn int)
 BEGIN
 	DECLARE @Count as int

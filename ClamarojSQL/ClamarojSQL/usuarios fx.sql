@@ -1,14 +1,15 @@
-
+use clamaroj
+go
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		Joshua
--- Create date: 02/08/2023
+-- ALTER date: 02/08/2023
 -- Description:	
 -- =============================================
-alter FUNCTION dbo.fxGetUsuarios()
+ALTER FUNCTION dbo.fxGetUsuarios()
 RETURNS TABLE 
 AS
 RETURN 
@@ -28,7 +29,7 @@ SELECT * FROM dbo.fxGetUsuarios()
 --insert into RolesUsuarios(IdRol,IdUsuario)
 --values(2,1)
 go
-alter function dbo.fxGetRolesUsuario(@IdUsuario int)
+ALTER function dbo.fxGetRolesUsuario(@IdUsuario int)
 returns table
 as
 return
@@ -52,16 +53,16 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		Joshua
--- Create date: 02/08/2023
+-- ALTER date: 02/08/2023
 -- Description:	
 -- =============================================
-alter PROCEDURE dbo.UsuariosUPD
+ALTER PROCEDURE dbo.UsuariosUPD
 	@Id int,
 	@Nombre varchar(50),
 	@Apellido varchar(50),
 	@Correo varchar(50),
 	@FechaNacimiento datetime,
-	@Foto varchar(50),
+	@Foto TEXT,
 	@IdStatus int
 	--,
 	--@IdRoles varchar(max)
@@ -102,5 +103,14 @@ END
 -- 		VALUES(@IdRol,@Id)
 -- 	END
 -- 	--Sino hay un rol
-
+GO
 SELECT * FROM dbo.fxConvertIDsToTable('')
+GO
+ALTER PROCEDURE dbo.UsuarioDEL
+	@Id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DELETE FROM dbo.Usuarios WHERE Id = @Id
+END
+GO
