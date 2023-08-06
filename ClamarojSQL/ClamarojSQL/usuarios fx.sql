@@ -1,15 +1,17 @@
 use clamaroj
 go
+SELECT * FROM dbo.Usuarios
+GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		Joshua
--- ALTER date: 02/08/2023
+-- alter date: 02/08/2023
 -- Description:	
 -- =============================================
-ALTER FUNCTION dbo.fxGetUsuarios()
+alter FUNCTION dbo.fxGetUsuarios()
 RETURNS TABLE 
 AS
 RETURN 
@@ -29,7 +31,7 @@ SELECT * FROM dbo.fxGetUsuarios()
 --insert into RolesUsuarios(IdRol,IdUsuario)
 --values(2,1)
 go
-ALTER function dbo.fxGetRolesUsuario(@IdUsuario int)
+alter function dbo.fxGetRolesUsuario(@IdUsuario int)
 returns table
 as
 return
@@ -53,17 +55,18 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		Joshua
--- ALTER date: 02/08/2023
+-- alter date: 02/08/2023
 -- Description:	
 -- =============================================
-ALTER PROCEDURE dbo.UsuariosUPD
-	@Id int,
+alter PROCEDURE dbo.UsuariosUPD
+	@Id int out,
 	@Nombre varchar(50),
 	@Apellido varchar(50),
 	@Correo varchar(50),
 	@FechaNacimiento datetime,
 	@Foto TEXT,
-	@IdStatus int
+	@IdStatus int,
+	@Password varchar(MAX)
 	--,
 	--@IdRoles varchar(max)
 AS
@@ -78,11 +81,12 @@ BEGIN
 			Correo = @Correo,
 			FechaNacimiento = @FechaNacimiento,
 			Foto = @Foto,
-			IdStatus = @IdStatus
+			IdStatus = @IdStatus,
+			[Password] = @Password
 		WHERE Id = @Id
 	ELSE
-		INSERT INTO dbo.Usuarios(Nombre,Apellido,Correo,FechaNacimiento,Foto,IdStatus,FechaRegistro)
-		VALUES(@Nombre,@Apellido,@Correo,@FechaNacimiento,@Foto,@IdStatus, GETDATE())
+		INSERT INTO dbo.Usuarios(Nombre,Apellido,Correo,FechaNacimiento,Foto,IdStatus,FechaRegistro,[Password])
+		VALUES(@Nombre,@Apellido,@Correo,@FechaNacimiento,@Foto,@IdStatus, GETDATE(), @Password)
 END
 
 -- IF EXISTS(SELECT * FROM dbo.RolesUsuarios WHERE IdUsuario = @Id)
@@ -106,7 +110,7 @@ END
 GO
 SELECT * FROM dbo.fxConvertIDsToTable('')
 GO
-ALTER PROCEDURE dbo.UsuarioDEL
+alter PROCEDURE dbo.UsuarioDEL
 	@Id int
 AS
 BEGIN
@@ -114,3 +118,19 @@ BEGIN
 	DELETE FROM dbo.Usuarios WHERE Id = @Id
 END
 GO
+alter FUNCTION dbo.fxGetUsuario(@Id int)
+RETURNS TABLE
+AS
+RETURN
+(
+	SELECT U.Id,U.Nombre,U.Apellido, U.Correo, U.FechaNacimiento, U.Foto, E.Nombre AS Estatus, U.IdStatus--, R.Id as IdRol, R.Nombre AS Roles
+	FROM dbo.Usuarios U
+	--JOIN dbo.RolesUsuarios RU
+	--	ON RU.IdUsuario = U.Id
+	--JOIN dbo.Roles R
+	--	ON R.Id = RU.IdRol
+	JOIN dbo.Estatus E
+		ON E.Id = U.IdStatus
+	WHERE U.Id = @Id
+)
+

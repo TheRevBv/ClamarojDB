@@ -3,7 +3,7 @@ GO
 
 SELECT * FROM dbo.Clientes
 GO
-ALTER PROCEDURE dbo.ClientesUPD
+alter PROCEDURE dbo.ClientesUPD
     @Id int,
     @IdUsuario int,
     @Nombre varchar(50),
@@ -11,10 +11,11 @@ ALTER PROCEDURE dbo.ClientesUPD
     @Correo varchar(50),
     @FechaNacimiento datetime,
     @Foto TEXT,
+    @Password varchar(MAX),
     @IdStatus int,
-    @Rfc varchar(50),
+    @Rfc varchar(13),
     @Direccion varchar(50),
-    @Telefono varchar(13)
+    @Telefono varchar(10)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -24,23 +25,22 @@ BEGIN
         SET Rfc = @Rfc,
             Direccion = @Direccion,
             Telefono = @Telefono
-
         WHERE IdCliente = @Id
 
-        EXEC dbo.UsuariosUPD @IdUsuario, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus
+        EXEC dbo.UsuariosUPD @IdUsuario, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password
     END
     ELSE
     BEGIN
-        INSERT INTO dbo.Clientes(Rfc,Direccion,Telefono)
-        VALUES(@Rfc,@Direccion,@Telefono)
+        EXEC dbo.UsuariosUPD @IdUsuario out, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password
 
-        EXEC dbo.UsuariosUPD @IdUsuario, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus
+        INSERT INTO dbo.Clientes(Rfc,Direccion,Telefono,IdUsuario)
+        VALUES(@Rfc,@Direccion,@Telefono,@IdUsuario)
     END
 END
 
 GO
 
-ALTER PROCEDURE dbo.ClienteDEL
+alter PROCEDURE dbo.ClienteDEL
     @Id int
 AS
 BEGIN
@@ -53,7 +53,7 @@ BEGIN
 END
 
 GO
-ALTER FUNCTION dbo.fxGetClientes()
+alter FUNCTION dbo.fxGetClientes()
 RETURNS TABLE
 AS
 RETURN
@@ -63,19 +63,21 @@ RETURN
     INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id    
 )
 GO
-ALTER FUNCTION dbo.fxGetCliente(@Id int)
+alter FUNCTION dbo.fxGetCliente(@Id int)
 RETURNS TABLE
 AS
 RETURN
 (
-    SELECT C.IdCliente, U.Nombre, U.Apellido, U.Correo, U.FechaNacimiento, U.Foto, U.IdStatus, C.Rfc, C.Direccion, C.Telefono
+    SELECT C.IdCliente, U.Nombre, U.Apellido, U.Correo, U.FechaNacimiento, 
+    U.Foto, U.IdStatus, C.Rfc, C.Direccion, C.Telefono, U.Id as IdUsuario
+    , U.Password
     FROM dbo.Clientes C
     INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id
     WHERE C.IdCliente = @Id
 )
 
 GO
-ALTER FUNCTION dbo.fxGetClienteByUsuario(@IdUsuario int)
+alter FUNCTION dbo.fxGetClienteByUsuario(@IdUsuario int)
 RETURNS TABLE
 AS
 RETURN
@@ -85,3 +87,13 @@ RETURN
     INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id
     WHERE C.IdUsuario = @IdUsuario
 )
+
+GO
+-- EXEC dbo.ClientesUPD 4, 11, 'Juan', 'Perez','cli1@clamaroj.com' ,'20020910', 'foto', '123', 1, 'MMMM123456MMM', 'DIREE', '4771234567'
+
+
+-- USE master
+GO
+--ELIMINA MI DB CERRANDO LAS CONEXIONES ACTIVAS
+-- alter DATABASE Clamaroj SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+-- DROP DATABASE Clamaroj

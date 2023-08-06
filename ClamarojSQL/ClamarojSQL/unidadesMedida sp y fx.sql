@@ -3,7 +3,7 @@ go
 select * from dbo.UnidadesMedida
 go
 
-ALTER PROCEDURE dbo.UnidadesMedidaUPD
+CREATE PROCEDURE dbo.UnidadesMedidaUPD
     @Id int,
     @Nombre varchar(50),
     @Descripcion varchar(120),
@@ -27,7 +27,7 @@ BEGIN
 END
 
 GO
-ALTER PROCEDURE dbo.UnidadesMedidaDEL
+CREATE PROCEDURE dbo.UnidadesMedidaDEL
     @Id int
 AS
 BEGIN
@@ -36,7 +36,7 @@ BEGIN
 END
 
 GO
-ALTER FUNCTION dbo.fxGetUnidadesMedida()
+CREATE FUNCTION dbo.fxGetUnidadesMedida()
 RETURNS TABLE
 AS
 RETURN
@@ -45,7 +45,7 @@ RETURN
 )
 
 GO
-ALTER FUNCTION dbo.fxGetUnidadMedida
+CREATE FUNCTION dbo.fxGetUnidadMedida
 (
     @Id int
 )
@@ -56,3 +56,5 @@ RETURN
     SELECT * FROM dbo.UnidadesMedida WHERE IdUnidadMedida = @Id
 )
 GO
+-- TRUNCATE TABLE dbo.UnidadesMedida
+

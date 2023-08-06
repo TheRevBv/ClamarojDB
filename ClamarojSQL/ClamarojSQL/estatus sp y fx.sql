@@ -1,8 +1,9 @@
 USE Clamaroj
 GO
-SELECT * FROM dbo.Estatus
+    SELECT Id as IdEstatus, Nombre
+    FROM dbo.Estatus
 GO
-ALTER PROCEDURE dbo.EstatusUPD
+CREATE PROCEDURE dbo.EstatusUPD
     @Id int,
     @Nombre varchar(50)
 AS
@@ -22,7 +23,7 @@ BEGIN
 END
 
 GO
-ALTER PROCEDURE dbo.EstatusDEL
+CREATE PROCEDURE dbo.EstatusDEL
     @Id int
 AS
 BEGIN
@@ -31,16 +32,17 @@ BEGIN
 END
 
 GO
-ALTER FUNCTION dbo.fxGetEstatuses()
+CREATE FUNCTION dbo.fxGetEstatuses()
 RETURNS TABLE
 AS
 RETURN
 (
-    SELECT * FROM dbo.Estatus
+    SELECT Id as IdEstatus, Nombre
+    FROM dbo.Estatus
 )
 
 GO
-ALTER FUNCTION dbo.fxGetEstatus
+CREATE FUNCTION dbo.fxGetEstatus
 (
     @Id int
 )
@@ -48,6 +50,7 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT * FROM dbo.Estatus WHERE Id = @Id
+    SELECT Id as IdEstatus, Nombre
+    FROM dbo.Estatus WHERE Id = @Id
 )
 GO
