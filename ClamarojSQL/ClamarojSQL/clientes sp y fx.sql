@@ -19,6 +19,7 @@ alter PROCEDURE dbo.ClientesUPD
 AS
 BEGIN
     SET NOCOUNT ON;
+	DECLARE @IdRoles int = 2
     IF EXISTS(SELECT * FROM dbo.Clientes WHERE IdCliente = @Id)
     BEGIN
         UPDATE dbo.Clientes
@@ -27,14 +28,16 @@ BEGIN
             Telefono = @Telefono
         WHERE IdCliente = @Id
 
-        EXEC dbo.UsuariosUPD @IdUsuario, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password
+        EXEC dbo.UsuariosUPD @IdUsuario, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password, @IdRoles
     END
     ELSE
     BEGIN
-        EXEC dbo.UsuariosUPD @IdUsuario out, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password
+        EXEC dbo.UsuariosUPD @IdUsuario out, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password, @IdRoles
+
+		DECLARE @IdUser int = (select MAX(Id) from dbo.Usuarios)
 
         INSERT INTO dbo.Clientes(Rfc,Direccion,Telefono,IdUsuario)
-        VALUES(@Rfc,@Direccion,@Telefono,@IdUsuario)
+        VALUES(@Rfc,@Direccion,@Telefono,@IdUser)
     END
 END
 

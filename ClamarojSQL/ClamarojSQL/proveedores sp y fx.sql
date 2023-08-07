@@ -2,7 +2,7 @@ USE Clamaroj
 GO
 SELECT * FROM dbo.Proveedores
 GO
-alter PROCEDURE dbo.ProveedoresUPD
+ALTER PROCEDURE dbo.ProveedoresUPD
     @Id int,
     @IdUsuario int,
     @Nombre varchar(50),
@@ -19,6 +19,7 @@ alter PROCEDURE dbo.ProveedoresUPD
 AS
 BEGIN
     SET NOCOUNT ON;
+	DECLARE @IdRoles int = 3
     IF EXISTS(SELECT * FROM dbo.Proveedores WHERE IdProveedor = @Id)
     BEGIN
         UPDATE dbo.Proveedores
@@ -28,21 +29,23 @@ BEGIN
             RazonSocial = @RazonSocial
         WHERE IdProveedor = @Id
 
-        EXEC dbo.UsuariosUPD @IdUsuario, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password
+        EXEC dbo.UsuariosUPD @IdUsuario, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password, @IdRoles
     END
     ELSE
     BEGIN
-        EXEC dbo.UsuariosUPD @IdUsuario out, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password
+        EXEC dbo.UsuariosUPD @IdUsuario out, @Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, @Password, @IdRoles
+
+		DECLARE @IdUser int = (select MAX(Id) from dbo.Usuarios)
 
         INSERT INTO dbo.Proveedores(Rfc,Direccion,Telefono,IdUsuario,RazonSocial)
-        VALUES(@Rfc,@Direccion,@Telefono,@IdUsuario,@RazonSocial)
+        VALUES(@Rfc,@Direccion,@Telefono,@IdUser,@RazonSocial)
 
     END
 END
 
 GO
 
-alter PROCEDURE dbo.ProveedorDEL
+ALTER PROCEDURE dbo.ProveedorDEL
     @Id int
 AS
 BEGIN
@@ -55,7 +58,7 @@ BEGIN
 END
 
 GO
-alter FUNCTION dbo.fxGetProveedores()
+ALTER FUNCTION dbo.fxGetProveedores()
 RETURNS TABLE
 AS
 RETURN
@@ -68,7 +71,7 @@ RETURN
 )
 
 GO
-alter FUNCTION dbo.fxGetProveedor(@Id int)
+ALTER FUNCTION dbo.fxGetProveedor(@Id int)
 RETURNS TABLE
 AS
 RETURN

@@ -8,10 +8,128 @@ SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
 -- Author:		Joshua
--- alter date: 02/08/2023
+-- CREATE date: 02/08/2023
 -- Description:	
 -- =============================================
-alter FUNCTION dbo.fxGetUsuarios()
+/*ALTER PROCEDURE dbo.UsuariosUPD
+	@Id int out,
+	@Nombre varchar(50),
+	@Apellido varchar(50),
+	@Correo varchar(50),
+	@FechaNacimiento datetime,
+	@Foto TEXT,
+	@IdStatus int,
+	@Password varchar(MAX)
+	,
+	@IdRoles varchar(max) = ''
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF EXISTS(SELECT * FROM dbo.Usuarios WHERE Id = @Id)
+		UPDATE dbo.Usuarios
+		SET Nombre = @Nombre,
+			Apellido = @Apellido,
+			Correo = @Correo,
+			FechaNacimiento = @FechaNacimiento,
+			Foto = @Foto,
+			IdStatus = @IdStatus,
+			[Password] = @Password
+		WHERE Id = @Id
+	ELSE
+		INSERT INTO dbo.Usuarios(Nombre,Apellido,Correo,FechaNacimiento,Foto,IdStatus,FechaRegistro,[Password])
+		VALUES(@Nombre,@Apellido,@Correo,@FechaNacimiento,@Foto,@IdStatus, GETDATE(), @Password)
+END
+*/
+ALTER PROCEDURE dbo.UsuariosUPD
+	@Id int out,
+	@Nombre varchar(50),
+	@Apellido varchar(50),
+	@Correo varchar(50),
+	@FechaNacimiento datetime,
+	@Foto TEXT,
+	@IdStatus int,
+	@Password varchar(MAX),
+	@IdRoles varchar(max) 
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	-- Eliminar registros asociados al usuario en la tabla RolesUsuario
+	DELETE FROM dbo.RolesUsuarios WHERE IdUsuario = @Id
+
+	IF EXISTS(SELECT * FROM dbo.Usuarios WHERE Id = @Id)
+	BEGIN
+		UPDATE dbo.Usuarios
+		SET Nombre = @Nombre,
+			Apellido = @Apellido,
+			Correo = @Correo,
+			FechaNacimiento = @FechaNacimiento,
+			Foto = @Foto,
+			IdStatus = @IdStatus,
+			[Password] = @Password
+		WHERE Id = @Id
+	END
+	ELSE
+	BEGIN
+		INSERT INTO dbo.Usuarios(Nombre, Apellido, Correo, FechaNacimiento, Foto, IdStatus, FechaRegistro, [Password])
+		VALUES (@Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, GETDATE(), @Password)
+
+		-- Obtener el ID del usuario recién insertado
+		SET @Id = SCOPE_IDENTITY()
+	END
+
+	IF @IdRoles <> ''
+	BEGIN
+		-- Convertir la cadena @IdRoles en una tabla temporal para iterar sobre ella
+		DECLARE @RolesTable AS TABLE (RoleId INT)
+		DECLARE @RoleId INT
+
+		-- Dividir la cadena @IdRoles y almacenar los IDs de roles en la tabla temporal
+		WHILE LEN(@IdRoles) > 0
+		BEGIN
+			IF CHARINDEX(',', @IdRoles) > 0
+			BEGIN
+				SET @RoleId = CAST(LEFT(@IdRoles, CHARINDEX(',', @IdRoles) - 1) AS INT)
+				SET @IdRoles = RIGHT(@IdRoles, LEN(@IdRoles) - CHARINDEX(',', @IdRoles))
+			END
+			ELSE
+			BEGIN
+				SET @RoleId = CAST(@IdRoles AS INT)
+				SET @IdRoles = ''
+			END
+
+			INSERT INTO @RolesTable (RoleId) VALUES (@RoleId)
+		END
+
+		-- Insertar los registros en la tabla RolesUsuario
+		INSERT INTO dbo.RolesUsuarios (IdRol, IdUsuario)
+		SELECT RoleId, @Id FROM @RolesTable
+	END
+END
+
+--GO
+--EXEC dbo.UsuariosUPD
+--@Id = 0,
+--@Nombre = 'Usuario de prueba' ,
+--@Apellido = 'Vendedor',
+--@Correo = 'seller@clamaroj.com',
+--@FechaNacimiento = '20031201' ,
+--@Foto = '',
+--@IdStatus = 1 ,
+--@Password = 'Clamaroj123'
+
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Joshua
+-- CREATE date: 02/08/2023
+-- Description:	
+-- =============================================
+ALTER FUNCTION dbo.fxGetUsuarios()
 RETURNS TABLE 
 AS
 RETURN 
@@ -31,7 +149,7 @@ SELECT * FROM dbo.fxGetUsuarios()
 --insert into RolesUsuarios(IdRol,IdUsuario)
 --values(2,1)
 go
-alter function dbo.fxGetRolesUsuario(@IdUsuario int)
+ALTER function dbo.fxGetRolesUsuario(@IdUsuario int)
 returns table
 as
 return
@@ -47,70 +165,8 @@ return
 go
 select * from dbo.fxGetRolesUsuario(1)
 
---Procedimiento almacenado para insertar un usuario con un rol especifico y si existe el usuario actualizarlo
--- ================================================
-SET ANSI_NULLS ON
 GO
-SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
--- Author:		Joshua
--- alter date: 02/08/2023
--- Description:	
--- =============================================
-alter PROCEDURE dbo.UsuariosUPD
-	@Id int out,
-	@Nombre varchar(50),
-	@Apellido varchar(50),
-	@Correo varchar(50),
-	@FechaNacimiento datetime,
-	@Foto TEXT,
-	@IdStatus int,
-	@Password varchar(MAX)
-	--,
-	--@IdRoles varchar(max)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-	IF EXISTS(SELECT * FROM dbo.Usuarios WHERE Id = @Id)
-		UPDATE dbo.Usuarios
-		SET Nombre = @Nombre,
-			Apellido = @Apellido,
-			Correo = @Correo,
-			FechaNacimiento = @FechaNacimiento,
-			Foto = @Foto,
-			IdStatus = @IdStatus,
-			[Password] = @Password
-		WHERE Id = @Id
-	ELSE
-		INSERT INTO dbo.Usuarios(Nombre,Apellido,Correo,FechaNacimiento,Foto,IdStatus,FechaRegistro,[Password])
-		VALUES(@Nombre,@Apellido,@Correo,@FechaNacimiento,@Foto,@IdStatus, GETDATE(), @Password)
-END
-
--- IF EXISTS(SELECT * FROM dbo.RolesUsuarios WHERE IdUsuario = @Id)
--- 	BEGIN
--- 		IF EXISTS(SELECT * FROM dbo.RolesUsuarios WHERE IdUsuario = @Id AND IdRol = @IdRol)
--- 		BEGIN
--- 			RETURN
--- 		END
--- 		ELSE
--- 		BEGIN
--- 			INSERT INTO dbo.RolesUsuarios(IdRol,IdUsuario)
--- 			VALUES(@IdRol,@Id)
--- 		END
--- 	END
--- 	ELSE
--- 	BEGIN
--- 		INSERT INTO dbo.RolesUsuarios(IdRol,IdUsuario)
--- 		VALUES(@IdRol,@Id)
--- 	END
--- 	--Sino hay un rol
-GO
-SELECT * FROM dbo.fxConvertIDsToTable('')
-GO
-alter PROCEDURE dbo.UsuarioDEL
+ALTER PROCEDURE dbo.UsuarioDEL
 	@Id int
 AS
 BEGIN
@@ -118,7 +174,7 @@ BEGIN
 	DELETE FROM dbo.Usuarios WHERE Id = @Id
 END
 GO
-alter FUNCTION dbo.fxGetUsuario(@Id int)
+ALTER FUNCTION dbo.fxGetUsuario(@Id int)
 RETURNS TABLE
 AS
 RETURN
@@ -133,4 +189,10 @@ RETURN
 		ON E.Id = U.IdStatus
 	WHERE U.Id = @Id
 )
+GO
+select * from dbo.Roles
+select * from Usuarios
+SELECT * FROM dbo.RolesUsuarios
+--update Usuarios
+--set IdStatus = 1
 
