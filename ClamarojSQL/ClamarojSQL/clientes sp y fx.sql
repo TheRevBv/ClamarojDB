@@ -3,7 +3,7 @@ GO
 
 SELECT * FROM dbo.Clientes
 GO
-alter PROCEDURE dbo.ClientesUPD
+CREATE PROCEDURE dbo.ClientesUPD
     @Id int,
     @IdUsuario int,
     @Nombre varchar(50),
@@ -43,7 +43,7 @@ END
 
 GO
 
-alter PROCEDURE dbo.ClienteDEL
+CREATE PROCEDURE dbo.ClienteDEL
     @Id int
 AS
 BEGIN
@@ -56,7 +56,7 @@ BEGIN
 END
 
 GO
-alter FUNCTION dbo.fxGetClientes()
+CREATE FUNCTION dbo.fxGetClientes()
 RETURNS TABLE
 AS
 RETURN
@@ -66,7 +66,7 @@ RETURN
     INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id    
 )
 GO
-alter FUNCTION dbo.fxGetCliente(@Id int)
+CREATE FUNCTION dbo.fxGetCliente(@Id int)
 RETURNS TABLE
 AS
 RETURN
@@ -80,7 +80,7 @@ RETURN
 )
 
 GO
-alter FUNCTION dbo.fxGetClienteByUsuario(@IdUsuario int)
+CREATE FUNCTION dbo.fxGetClienteByUsuario(@IdUsuario int)
 RETURNS TABLE
 AS
 RETURN
@@ -98,5 +98,5 @@ GO
 -- USE master
 GO
 --ELIMINA MI DB CERRANDO LAS CONEXIONES ACTIVAS
--- alter DATABASE Clamaroj SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+-- CREATE DATABASE Clamaroj SET SINGLE_USER WITH ROLLBACK IMMEDIATE
 -- DROP DATABASE Clamaroj
