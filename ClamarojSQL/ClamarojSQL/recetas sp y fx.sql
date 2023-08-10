@@ -7,61 +7,84 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT IdReceta, Codigo, IdProducto, IdStatus, FechaRegistro, FechaModificacion
-    FROM dbo.Recetas
+    SELECT R.IdReceta idReceta, 
+	R.Codigo codigo, 
+	P.Nombre producto,
+	E.Nombre estatus
+	--IdProducto, 
+	--IdStatus, 	
+    FROM dbo.Recetas R
+	JOIN dbo.Productos P
+		ON P.IdProducto = R.IdProducto
+	JOIN dbo.Estatus E
+		ON E.Id = R.IdStatus
 )
 GO
 -- Función para obtener una receta por su ID
-CREATE FUNCTION dbo.fxGetRecetaById(@Id int)
+CREATE FUNCTION dbo.fxGetReceta(@Id int)
 RETURNS TABLE
 AS
 RETURN
 (
-    SELECT IdReceta, Codigo, IdProducto, IdStatus, FechaRegistro, FechaModificacion
-    FROM dbo.Recetas
-    WHERE IdReceta = @Id
+    SELECT 
+	IdReceta as idReceta, 
+	Codigo as codigo, 
+	IdProducto as idProducto, 
+	IdStatus as idStatus
+	FROM dbo.Recetas
+	WHERE IdReceta = @Id
+
 )
 GO
 -- Procedimiento almacenado para insertar o actualizar una receta
-CREATE PROCEDURE dbo.RecetaUPD
-    @IdReceta int,
+CREATE PROCEDURE dbo.RecetasUPD
+    @Id int out,
     @Codigo varchar(10),
     @IdProducto int,
-    @IdStatus int,
-    @FechaRegistro datetime,
+    @IdStatus int--,
+    --@FechaRegistro datetime,
     -- @FechaModificacion datetime = GETDATE(),
-    @Ingredientes nvarchar(max)
+    --@IdMateriasPrimas nvarchar(max)
 AS
 BEGIN
     SET NOCOUNT ON;
+	DELETE FROM dbo.Ingrediente WHERE IdReceta = @Id
 
-    IF EXISTS(SELECT * FROM dbo.Recetas WHERE IdReceta = @IdReceta)
+    IF EXISTS(SELECT * FROM dbo.Recetas WHERE IdReceta = @Id)
     BEGIN
         UPDATE dbo.Recetas
         SET Codigo = @Codigo,
             IdProducto = @IdProducto,
             IdStatus = @IdStatus,
-            FechaRegistro = @FechaRegistro,
+            FechaRegistro = GETDATE(),
             FechaModificacion = GETDATE()
-        WHERE IdReceta = @IdReceta
+        WHERE IdReceta = @Id
     END
     ELSE
     BEGIN
         INSERT INTO dbo.Recetas(IdReceta, Codigo, IdProducto, IdStatus, FechaRegistro, FechaModificacion)
-        VALUES (@IdReceta, @Codigo, @IdProducto, @IdStatus, @FechaRegistro, GETDATE())
-    END
+        VALUES (@Id, @Codigo, @IdProducto, @IdStatus, GETDATE(), GETDATE())
 
-    -- Actualizar ingredientes
-    DELETE FROM dbo.Ingrediente WHERE IdReceta = @IdReceta;
-    INSERT INTO dbo.Ingrediente(IdReceta, Ingredientes) VALUES (@IdReceta, @Ingredientes)
+		-- Obtener el ID del usuario recién insertado
+		SET @Id = SCOPE_IDENTITY()
+    END
+    -- Actualizar ingredientes    
+	--Se hara en otro stored para configurar las recetas
+	
 END
 GO
 -- Procedimiento almacenado para eliminar una receta por su ID
-CREATE PROCEDURE dbo.RecetaDEL
-    @IdReceta int
+CREATE PROCEDURE dbo.RecetasDEL
+    @Id int
 AS
 BEGIN
     SET NOCOUNT ON;
-    DELETE FROM dbo.Recetas WHERE IdReceta = @IdReceta
-    DELETE FROM dbo.Ingrediente WHERE IdReceta = @IdReceta
+    --DELETE FROM dbo.Recetas WHERE IdReceta = @Id
+	UPDATE dbo.Recetas
+	SET IdStatus = 2
+	WHERE IdReceta = @Id
+    DELETE FROM dbo.Ingrediente WHERE IdReceta = @Id
 END
+
+go
+

@@ -7,21 +7,17 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT mp.Id as id, 
-    mp.Codigo as codigo, 
-    mp.Nombre as nombre, 
-    p.RazonSocial as razonSocial,
-    s.Nombre as estatus
-    -- , 
-    -- IdProveedor, 
-    -- IdStatus, 
-    -- FechaRegistro, 
-    -- FechaModificacion
-    FROM dbo.MateriasPrimas as mp
-    JOIN dbo.Proveedores as p
-    ON mp.IdProveedor = p.IdProveedor
-    JOIN dbo.Estatus as s
-    ON mp.IdStatus = s.Id
+    SELECT 
+		MP.Id as id, 
+		MP.Codigo as codigo, 
+		MP.Nombre as nombre, 
+		P.RazonSocial as razonSocial,
+		S.Nombre as estatus
+    FROM dbo.MateriasPrimas as MP
+    JOIN dbo.Proveedores as P
+		ON MP.IdProveedor = P.IdProveedor
+    JOIN dbo.Estatus as S
+		ON MP.IdStatus = S.Id
 )
 GO
 -- Función para obtener una materia prima por su ID
@@ -30,28 +26,30 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT Id, 
-    Codigo, 
-    Nombre, 
-    Descripcion, 
-    Perecedero, 
-    Stock, 
-    CantMinima, 
-    CantMaxima,
-    IdUnidadMedida, 
-    Precio, 
-    Foto, 
-    IdProveedor, 
-    IdStatus, 
-    FechaRegistro, 
-    FechaModificacion
-    FROM dbo.MateriasPrimas
-    WHERE Id = @Id
+    SELECT 
+		Id as id, 
+		Codigo as codigo, 
+		Nombre as nombre, 
+		Descripcion as descripcion, 
+		Perecedero as perecedero, 
+		Stock as stock, 
+		CantMinima as cantMinima, 
+		CantMaxima as cantMaxima,
+		IdUnidadMedida as idUnidadMedida, 
+		Precio as precio, 
+		Foto as foto, 
+		IdProveedor as idProveedor, 
+		IdStatus as idStatus, 
+		FechaRegistro as fechaRegistro, 
+		FechaModificacion as fechaModificacion
+	FROM dbo.MateriasPrimas
+	WHERE Id = @Id
+
 )
 GO
 -- Procedimiento almacenado para insertar o actualizar una materia prima
 CREATE PROCEDURE dbo.MateriasPrimasUPD
-    @Id int,
+    @Id int out,
     @Codigo varchar(10),
     @Nombre varchar(45),
     @Descripcion varchar(120),
@@ -63,9 +61,9 @@ CREATE PROCEDURE dbo.MateriasPrimasUPD
     @Precio decimal(18,4),
     @Foto nvarchar(max),
     @IdProveedor int,
-    @IdStatus int,
-    @FechaRegistro datetime,
-    @FechaModificacion datetime--,
+    @IdStatus int--,
+    --@FechaRegistro datetime,
+    --@FechaModificacion datetime--,
     -- @Ingredientes nvarchar(max)
 AS
 BEGIN
@@ -86,8 +84,7 @@ BEGIN
             Foto = @Foto,
             IdProveedor = @IdProveedor,
             IdStatus = @IdStatus,
-            FechaRegistro = @FechaRegistro,
-            FechaModificacion = @FechaModificacion
+            FechaModificacion = GETDATE()
         WHERE Id = @Id
     END
     ELSE
@@ -97,7 +94,7 @@ BEGIN
                                      Foto, IdProveedor, IdStatus, FechaRegistro, FechaModificacion)
         VALUES (@Id, @Codigo, @Nombre, @Descripcion, @Perecedero, @Stock,
                 @CantMinima, @CantMaxima, @IdUnidadMedida, @Precio,
-                @Foto, @IdProveedor, @IdStatus, @FechaRegistro, @FechaModificacion)
+                @Foto, @IdProveedor, @IdStatus, GETDATE(), GETDATE())
     END
 END
 GO

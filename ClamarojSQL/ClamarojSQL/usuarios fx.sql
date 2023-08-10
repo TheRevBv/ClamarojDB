@@ -6,40 +6,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- =============================================
--- Author:		Joshua
--- CREATE date: 02/08/2023
--- Description:	
--- =============================================
-/*ALTER PROCEDURE dbo.UsuariosUPD
-	@Id int out,
-	@Nombre varchar(50),
-	@Apellido varchar(50),
-	@Correo varchar(50),
-	@FechaNacimiento datetime,
-	@Foto TEXT,
-	@IdStatus int,
-	@Password varchar(MAX)
-	,
-	@IdRoles varchar(max) = ''
-AS
-BEGIN
-	SET NOCOUNT ON;
-	IF EXISTS(SELECT * FROM dbo.Usuarios WHERE Id = @Id)
-		UPDATE dbo.Usuarios
-		SET Nombre = @Nombre,
-			Apellido = @Apellido,
-			Correo = @Correo,
-			FechaNacimiento = @FechaNacimiento,
-			Foto = @Foto,
-			IdStatus = @IdStatus,
-			[Password] = @Password
-		WHERE Id = @Id
-	ELSE
-		INSERT INTO dbo.Usuarios(Nombre,Apellido,Correo,FechaNacimiento,Foto,IdStatus,FechaRegistro,[Password])
-		VALUES(@Nombre,@Apellido,@Correo,@FechaNacimiento,@Foto,@IdStatus, GETDATE(), @Password)
-END
-*/
+
 ALTER PROCEDURE dbo.UsuariosUPD
 	@Id int out,
 	@Nombre varchar(50),
@@ -80,30 +47,9 @@ BEGIN
 
 	IF @IdRoles <> ''
 	BEGIN
-		-- Convertir la cadena @IdRoles en una tabla temporal para iterar sobre ella
-		DECLARE @RolesTable AS TABLE (RoleId INT)
-		DECLARE @RoleId INT
-
-		-- Dividir la cadena @IdRoles y almacenar los IDs de roles en la tabla temporal
-		WHILE LEN(@IdRoles) > 0
-		BEGIN
-			IF CHARINDEX(',', @IdRoles) > 0
-			BEGIN
-				SET @RoleId = CAST(LEFT(@IdRoles, CHARINDEX(',', @IdRoles) - 1) AS INT)
-				SET @IdRoles = RIGHT(@IdRoles, LEN(@IdRoles) - CHARINDEX(',', @IdRoles))
-			END
-			ELSE
-			BEGIN
-				SET @RoleId = CAST(@IdRoles AS INT)
-				SET @IdRoles = ''
-			END
-
-			INSERT INTO @RolesTable (RoleId) VALUES (@RoleId)
-		END
-
 		-- Insertar los registros en la tabla RolesUsuario
 		INSERT INTO dbo.RolesUsuarios (IdRol, IdUsuario)
-		SELECT RoleId, @Id FROM @RolesTable
+		SELECT IdReturn, @Id FROM dbo.fxConvertIDsToTable(@IdRoles)
 	END
 END
 
