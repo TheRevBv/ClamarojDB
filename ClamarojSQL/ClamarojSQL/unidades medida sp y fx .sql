@@ -1,8 +1,9 @@
 USE Clamaroj
 GO
-
+SELECT * FROM dbo.UnidadesMedida
+go
 -- Función para obtener todas las unidades de medida
-ALTER FUNCTION dbo.fxGetUnidadesMedida()
+CREATE FUNCTION dbo.fxGetUnidadesMedida()
 RETURNS TABLE
 AS
 RETURN
@@ -15,7 +16,7 @@ RETURN
 )
 GO
 -- Función para obtener una unidad de medida por su ID
-ALTER FUNCTION dbo.fxGetUnidadMedida(@Id int)
+CREATE FUNCTION dbo.fxGetUnidadMedida(@Id int)
 RETURNS TABLE
 AS
 RETURN
@@ -29,8 +30,8 @@ RETURN
 )
 GO
 -- Procedimiento almacenado para insertar o actualizar una unidad de medida
-ALTER PROCEDURE dbo.UnidadesMedidaUPD
-    @IdUnidadMedida int,
+CREATE PROCEDURE dbo.UnidadesMedidaUPD
+    @IdUnidadMedida int out,
     @Nombre varchar(45),
     @Descripcion varchar(120),
     @IdStatus int
@@ -54,7 +55,7 @@ BEGIN
 END
 GO
 -- Procedimiento almacenado para eliminar una unidad de medida por su ID
-ALTER PROCEDURE dbo.UnidadesMedidaDEL
+CREATE PROCEDURE dbo.UnidadesMedidaDEL
     @IdUnidadMedida int
 AS
 BEGIN

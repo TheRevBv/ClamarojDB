@@ -7,7 +7,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER PROCEDURE dbo.UsuariosUPD
+CREATE PROCEDURE dbo.UsuariosUPD
 	@Id int out,
 	@Nombre varchar(50),
 	@Apellido varchar(50),
@@ -75,7 +75,7 @@ GO
 -- CREATE date: 02/08/2023
 -- Description:	
 -- =============================================
-ALTER FUNCTION dbo.fxGetUsuarios()
+CREATE FUNCTION dbo.fxGetUsuarios()
 RETURNS TABLE 
 AS
 RETURN 
@@ -95,7 +95,7 @@ SELECT * FROM dbo.fxGetUsuarios()
 --insert into RolesUsuarios(IdRol,IdUsuario)
 --values(2,1)
 go
-ALTER function dbo.fxGetRolesUsuario(@IdUsuario int)
+CREATE function dbo.fxGetRolesUsuario(@IdUsuario int)
 returns table
 as
 return
@@ -112,7 +112,7 @@ go
 select * from dbo.fxGetRolesUsuario(1)
 
 GO
-ALTER PROCEDURE dbo.UsuarioDEL
+CREATE PROCEDURE dbo.UsuarioDEL
 	@Id int
 AS
 BEGIN
@@ -120,7 +120,7 @@ BEGIN
 	DELETE FROM dbo.Usuarios WHERE Id = @Id
 END
 GO
-ALTER FUNCTION dbo.fxGetUsuario(@Id int)
+CREATE FUNCTION dbo.fxGetUsuario(@Id int)
 RETURNS TABLE
 AS
 RETURN

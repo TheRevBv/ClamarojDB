@@ -1,6 +1,8 @@
 USE Clamaroj
 GO
-
+SELECT * FROM dbo.Recetas
+select * from dbo.Productos
+GO
 -- Función para obtener todas las recetas
 CREATE FUNCTION dbo.fxGetRecetas()
 RETURNS TABLE

@@ -1,6 +1,7 @@
 USE Clamaroj
 GO
-
+SELECT * FROM dbo.MateriasPrimas
+GO
 -- Función para obtener todas las materias primas
 CREATE FUNCTION dbo.fxGetMateriasPrimas()
 RETURNS TABLE
@@ -12,7 +13,10 @@ RETURN
 		MP.Codigo as codigo, 
 		MP.Nombre as nombre, 
 		P.RazonSocial as razonSocial,
-		S.Nombre as estatus
+		S.Nombre as estatus,
+		MP.Descripcion as descripcion,
+		MP.Stock as stock,
+		MP.Precio as precio
     FROM dbo.MateriasPrimas as MP
     JOIN dbo.Proveedores as P
 		ON MP.IdProveedor = P.IdProveedor

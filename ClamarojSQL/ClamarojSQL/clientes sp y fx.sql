@@ -4,7 +4,7 @@ GO
 SELECT * FROM dbo.Clientes
 GO
 CREATE PROCEDURE dbo.ClientesUPD
-    @Id int,
+    @Id int out,
     @IdUsuario int,
     @Nombre varchar(50),
     @Apellido varchar(50),

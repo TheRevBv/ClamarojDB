@@ -2,8 +2,8 @@ USE Clamaroj
 GO
 SELECT * FROM dbo.Proveedores
 GO
-ALTER PROCEDURE dbo.ProveedoresUPD
-    @Id int,
+CREATE PROCEDURE dbo.ProveedoresUPD
+    @Id int out,
     @IdUsuario int,
     @Nombre varchar(50),
     @Apellido varchar(50),
@@ -45,7 +45,7 @@ END
 
 GO
 
-ALTER PROCEDURE dbo.ProveedorDEL
+CREATE PROCEDURE dbo.ProveedorDEL
     @Id int
 AS
 BEGIN
@@ -58,7 +58,7 @@ BEGIN
 END
 
 GO
-ALTER FUNCTION dbo.fxGetProveedores()
+CREATE FUNCTION dbo.fxGetProveedores()
 RETURNS TABLE
 AS
 RETURN
@@ -71,7 +71,7 @@ RETURN
 )
 
 GO
-ALTER FUNCTION dbo.fxGetProveedor(@Id int)
+CREATE FUNCTION dbo.fxGetProveedor(@Id int)
 RETURNS TABLE
 AS
 RETURN
