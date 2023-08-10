@@ -32,38 +32,38 @@
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
         <FileNode Name="clientes sp y fx.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>clientes sp y fx.sql</FullPath>
         </FileNode>
         <FileNode Name="estatus sp y fx.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>estatus sp y fx.sql</FullPath>
         </FileNode>
         <FileNode Name="ids to table fx.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>ids to table fx.sql</FullPath>
         </FileNode>
         <FileNode Name="ingredientes sp y fx.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>ingredientes sp y fx.sql</FullPath>
         </FileNode>
         <FileNode Name="materias primas.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>materias primas.sql</FullPath>
         </FileNode>
         <FileNode Name="proveedores sp y fx.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>proveedores sp y fx.sql</FullPath>
         </FileNode>
@@ -74,20 +74,20 @@
           <FullPath>pruebas.sql</FullPath>
         </FileNode>
         <FileNode Name="recetas sp y fx.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>recetas sp y fx.sql</FullPath>
         </FileNode>
         <FileNode Name="unidades medida sp y fx .sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>unidades medida sp y fx .sql</FullPath>
         </FileNode>
         <FileNode Name="usuarios fx.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:THEREVBV\SQLEXPRESS:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>THEREVBV\SQLEXPRESS</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>usuarios fx.sql</FullPath>
         </FileNode>

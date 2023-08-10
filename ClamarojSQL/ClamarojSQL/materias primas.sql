@@ -93,12 +93,14 @@ BEGIN
     END
     ELSE
     BEGIN
-        INSERT INTO dbo.MateriasPrimas(Id, Codigo, Nombre, Descripcion, Perecedero, Stock,
+        INSERT INTO dbo.MateriasPrimas(Codigo, Nombre, Descripcion, Perecedero, Stock,
                                      CantMinima, CantMaxima, IdUnidadMedida, Precio,
                                      Foto, IdProveedor, IdStatus, FechaRegistro, FechaModificacion)
-        VALUES (@Id, @Codigo, @Nombre, @Descripcion, @Perecedero, @Stock,
+        VALUES (@Codigo, @Nombre, @Descripcion, @Perecedero, @Stock,
                 @CantMinima, @CantMaxima, @IdUnidadMedida, @Precio,
                 @Foto, @IdProveedor, @IdStatus, GETDATE(), GETDATE())
+
+		SET @Id = SCOPE_IDENTITY()
     END
 END
 GO
