@@ -12,7 +12,9 @@ RETURN
     SELECT R.IdReceta idReceta, 
 	R.Codigo codigo, 
 	P.Nombre producto,
-	E.Nombre estatus
+	E.Nombre estatus,
+	R.Costo costo,
+	R.Cantidad cantidad
 	--IdProducto, 
 	--IdStatus, 	
     FROM dbo.Recetas R
@@ -30,7 +32,9 @@ RETURN
 (
     SELECT 
 	IdReceta as idReceta, 
-	Codigo as codigo, 
+	Codigo as codigo,
+	Costo as costo,
+	Cantidad as cantidad,
 	IdProducto as idProducto, 
 	IdStatus as idStatus
 	FROM dbo.Recetas
@@ -42,6 +46,8 @@ GO
 CREATE PROCEDURE dbo.RecetasUPD
     @Id int out,
     @Codigo varchar(10),
+	@Costo decimal(18,4),
+	@Cantidad decimal(18,4),
     @IdProducto int,
     @IdStatus int--,
     --@FechaRegistro datetime,
@@ -49,14 +55,15 @@ CREATE PROCEDURE dbo.RecetasUPD
     --@IdMateriasPrimas nvarchar(max)
 AS
 BEGIN
-    SET NOCOUNT ON;
-	DELETE FROM dbo.Ingrediente WHERE IdReceta = @Id
+    SET NOCOUNT ON;	
 
     IF EXISTS(SELECT * FROM dbo.Recetas WHERE IdReceta = @Id)
     BEGIN
         UPDATE dbo.Recetas
         SET Codigo = @Codigo,
             IdProducto = @IdProducto,
+			Costo = @Costo,
+			Cantidad = @Cantidad,
             IdStatus = @IdStatus,
             FechaRegistro = GETDATE(),
             FechaModificacion = GETDATE()
@@ -64,8 +71,8 @@ BEGIN
     END
     ELSE
     BEGIN
-        INSERT INTO dbo.Recetas(IdReceta, Codigo, IdProducto, IdStatus, FechaRegistro, FechaModificacion)
-        VALUES (@Id, @Codigo, @IdProducto, @IdStatus, GETDATE(), GETDATE())
+        INSERT INTO dbo.Recetas(Codigo, IdProducto, Cantidad, Costo, IdStatus, FechaRegistro, FechaModificacion)
+        VALUES (@Codigo, @IdProducto, @Cantidad, @Costo, @IdStatus, GETDATE(), GETDATE())
 
 		-- Obtener el ID del usuario recién insertado
 		SET @Id = SCOPE_IDENTITY()

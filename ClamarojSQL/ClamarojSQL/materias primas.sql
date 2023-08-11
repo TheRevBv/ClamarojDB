@@ -16,7 +16,9 @@ RETURN
 		S.Nombre as estatus,
 		MP.Descripcion as descripcion,
 		MP.Stock as stock,
-		MP.Precio as precio
+		MP.Precio as precio,
+		MP.Foto as foto,
+		0 as cantidad
     FROM dbo.MateriasPrimas as MP
     JOIN dbo.Proveedores as P
 		ON MP.IdProveedor = P.IdProveedor
