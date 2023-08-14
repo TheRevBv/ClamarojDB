@@ -17,9 +17,13 @@ CREATE PROCEDURE dbo.PedidoUPD
     @TipoEnvio char(4),
     @TipoPedido char(4),
     @Total decimal(18,4)
+	--,
+	--@IdsProductos
 AS
 BEGIN
     SET NOCOUNT ON;
+
+	DELETE FROM dbo.DetallePedidos WHERE IdPedido = @Id AND Fecha = @Fecha
 
     IF EXISTS(SELECT * FROM dbo.Pedidos WHERE IdPedido = @Id)
     BEGIN
