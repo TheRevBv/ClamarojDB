@@ -2,7 +2,6 @@ USE Clamaroj
 GO
 
 -- Procedimiento almacenado para insertar o actualizar un detalle de pedido
-CREATE PROCEDURE dbo.DetallesPedidosUPD
     @Id int out,
     @Fecha datetime,
     @IdPedido int,
@@ -32,6 +31,22 @@ BEGIN
 
         SET @Id = SCOPE_IDENTITY()
     END
+
+	UPDATE dbo.Pedidos 
+	SET Total = Total + @Subtotal
+	WHERE IdPedido = @IdPedido
+	AND Fecha = @Fecha
+
+	UPDATE dbo.Ventas
+	SET Total = Total + @Subtotal
+	WHERE IdPedido = @IdPedido
+	AND Fecha = @Fecha
+
+	UPDATE dbo.Compras
+	SET Total = Total + @Subtotal
+	WHERE IdPedido = @IdPedido
+	AND Fecha = @Fecha
+
 END
 GO
 

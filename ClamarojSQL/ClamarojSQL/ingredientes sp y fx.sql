@@ -139,7 +139,7 @@ SELECT
 0,
 '',
 '',
-'',
+--'',
 --'',
 I.Cantidad as cantidad
 FROM dbo.Ingrediente I

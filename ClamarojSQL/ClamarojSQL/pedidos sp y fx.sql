@@ -2,6 +2,8 @@ USE Clamaroj
 GO
 SELECT * FROM dbo.Pedidos
 select * from dbo.DetallePedidos
+SELECT * FROM dbo.Compras
+SELECT * FROM dbo.Ventas
 GO
 -- Procedimiento almacenado para insertar o actualizar un pedido
 CREATE PROCEDURE dbo.PedidosUPD
@@ -23,6 +25,8 @@ CREATE PROCEDURE dbo.PedidosUPD
 AS
 BEGIN
     SET NOCOUNT ON;
+	DECLARE @IdIns INT, @IdProveedor int, @IdCliente int 
+	SET @Total = 0
 
 	DELETE FROM dbo.DetallePedidos WHERE IdPedido = @Id AND Fecha = @Fecha
 
@@ -42,6 +46,25 @@ BEGIN
             TipoPedido = @TipoPedido,
             Total = @Total
         WHERE IdPedido = @Id
+
+		IF @TipoPedido = 'C'
+		BEGIN
+			SELECT @IdProveedor = IdProveedor FROM dbo.Proveedores WHERE IdUsuario = @IdUsuario
+			SET @IdProveedor = ISNULL(@IdProveedor, @IdUsuario)
+
+			SELECT @IdIns = Id FROM dbo.Compras WHERE IdPedido = @Id
+
+			EXEC dbo.ComprasUPD @IdIns,@Id,@Fecha,@IdProveedor, @Total
+		END
+		IF @TipoPedido = 'V'
+		BEGIN
+			SELECT @IdCliente = IdCliente FROM dbo.Clientes WHERE IdUsuario = @IdUsuario
+			SET @IdCliente = ISNULL(@IdCliente, @IdUsuario)
+
+			SELECT @IdIns = Id FROM dbo.Ventas WHERE IdPedido = @Id
+
+			EXEC dbo.VentasUPD @IdIns, @Id, @Fecha, @IdCliente, @Total
+		END
     END
     ELSE
     BEGIN
@@ -50,9 +73,24 @@ BEGIN
         INSERT INTO dbo.Pedidos(IdPedido,IdUsuario, IdStatus, Fecha, FechaEntrega, Domicilio, Telefono, RazonSocial, Rfc, TipoPago, TipoEnvio, TipoPedido, Total)
         VALUES (@Id,@IdUsuario, @IdStatus, @Fecha, @FechaEntrega, @Domicilio, @Telefono, @RazonSocial, @Rfc, @TipoPago, @TipoEnvio, @TipoPedido, @Total)
 
-        SET @Id = SCOPE_IDENTITY()
-    END
+        --SET @Id = SCOPE_IDENTITY()	
+		SET @IdIns = 0
 
+		IF @TipoPedido = 'C'
+		BEGIN
+			SELECT @IdProveedor = IdProveedor FROM dbo.Proveedores WHERE IdUsuario = @IdUsuario
+			SET @IdProveedor = ISNULL(@IdProveedor, @IdUsuario)
+
+			EXEC dbo.ComprasUPD @IdIns,@Id,@Fecha,@IdProveedor, @Total
+		END
+		IF @TipoPedido = 'V'
+		BEGIN
+			SELECT @IdCliente = IdCliente FROM dbo.Clientes WHERE IdUsuario = @IdUsuario
+			SET @IdCliente = ISNULL(@IdCliente, @IdUsuario)
+
+			EXEC dbo.VentasUPD @IdIns, @Id, @Fecha, @IdCliente, @Total
+		END
+    END
 	--EXEC dbo.DetallePedidosUPD @Id,@Id
 END
 
@@ -78,11 +116,16 @@ RETURN
            P.IdUsuario AS idUsuario,
            U.Nombre AS usuarioNombre,
            E.Nombre AS estatus,
-           P.Fecha, P.FechaEntrega,
-           P.Domicilio, P.Telefono,
-           P.RazonSocial, P.Rfc,
-           P.TipoPago, P.TipoEnvio, P.TipoPedido,
-           P.Total
+           P.Fecha AS fecha, 
+		   P.FechaEntrega as fechaEntrega,
+           P.Domicilio as domicilio, 
+		   P.Telefono as telefono,
+           P.RazonSocial as razonSocial, 
+		   P.Rfc as rfc,
+           P.TipoPago as tipoPago, 
+		   P.TipoEnvio as tipoEnvio, 
+		   P.TipoPedido as tipoPedido,
+           P.Total as total
     FROM dbo.Pedidos P
     JOIN dbo.Usuarios U ON U.Id = P.IdUsuario
     JOIN dbo.Estatus E ON E.Id = P.IdStatus
@@ -97,16 +140,20 @@ RETURN
 (
     SELECT P.IdPedido AS idPedido, 
            P.IdUsuario AS idUsuario,
-           U.Nombre AS usuarioNombre,
-           E.Nombre AS estatus,
-           P.Fecha, P.FechaEntrega,
-           P.Domicilio, P.Telefono,
-           P.RazonSocial, P.Rfc,
-           P.TipoPago, P.TipoEnvio, P.TipoPedido,
-           P.Total
+		   P.IdStatus as idStatus,
+           P.Fecha as fecha, 
+		   P.FechaEntrega as fechaEntrega,
+           P.Domicilio as domicilio, 
+		   P.Telefono as telefono,
+           P.RazonSocial as razonSocial, 
+		   P.Rfc as rfc,
+           TRIM(P.TipoPago) as tipoPago, 
+		   TRIM(P.TipoEnvio) as tipoEnvio, 
+		   TRIM(P.TipoPedido) as tipoPedido,
+           P.Total as total
     FROM dbo.Pedidos P
-    JOIN dbo.Usuarios U ON U.Id = P.IdUsuario
-    JOIN dbo.Estatus E ON E.Id = P.IdStatus
+    --JOIN dbo.Usuarios U ON U.Id = P.IdUsuario
+    --JOIN dbo.Estatus E ON E.Id = P.IdStatus
     WHERE P.IdPedido = @Id
 )
 GO
@@ -174,7 +221,7 @@ CREATE TABLE DetallePedidos (
 /*
 
 EXEC dbo.PedidosUPD
-@Id = 0,
+@Id = 1,
 @IdUsuario = 1,
 @IdStatus = 5,
 @Fecha = '20230701',
@@ -199,6 +246,9 @@ EXEC dbo.DetallesPedidosUPD
 
 SELECT * FROM dbo.Pedidos
 select * from dbo.DetallePedidos
+
+ALTER TABLE dbo.DetallePedidos
+DROP CONSTRAINT FK_DetallePedidos_Productos_IdProducto;
 
 */
 

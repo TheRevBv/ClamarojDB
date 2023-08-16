@@ -37,6 +37,12 @@
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>clientes sp y fx.sql</FullPath>
         </FileNode>
+        <FileNode Name="compras sp y fx.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>compras sp y fx.sql</FullPath>
+        </FileNode>
         <FileNode Name="detalle pedidos sp y fx.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
@@ -108,6 +114,12 @@
           <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>usuarios fx.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ventas sp y fx.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>ventas sp y fx.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>
