@@ -37,6 +37,12 @@
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>clientes sp y fx.sql</FullPath>
         </FileNode>
+        <FileNode Name="detalle pedidos sp y fx.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>detalle pedidos sp y fx.sql</FullPath>
+        </FileNode>
         <FileNode Name="estatus sp y fx.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
@@ -60,6 +66,18 @@
           <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>materias primas.sql</FullPath>
+        </FileNode>
+        <FileNode Name="pedidos sp y fx.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>pedidos sp y fx.sql</FullPath>
+        </FileNode>
+        <FileNode Name="productos sp y fx.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>productos sp y fx.sql</FullPath>
         </FileNode>
         <FileNode Name="proveedores sp y fx.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>

@@ -2,7 +2,7 @@ USE Clamaroj
 GO
 
 -- Procedimiento almacenado para insertar o actualizar un detalle de pedido
-CREATE PROCEDURE dbo.DetallePedidoUPD
+CREATE PROCEDURE dbo.DetallesPedidosUPD
     @Id int out,
     @Fecha datetime,
     @IdPedido int,
