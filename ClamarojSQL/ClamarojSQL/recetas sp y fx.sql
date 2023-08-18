@@ -83,17 +83,17 @@ BEGIN
 END
 GO
 -- Procedimiento almacenado para eliminar una receta por su ID
-CREATE PROCEDURE dbo.RecetasDEL
-    @Id int
-AS
-BEGIN
-    SET NOCOUNT ON;
-    --DELETE FROM dbo.Recetas WHERE IdReceta = @Id
-	UPDATE dbo.Recetas
-	SET IdStatus = 2
-	WHERE IdReceta = @Id
-    DELETE FROM dbo.Ingrediente WHERE IdReceta = @Id
-END
+	CREATE PROCEDURE dbo.RecetasDEL
+		@Id int
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+		--DELETE FROM dbo.Recetas WHERE IdReceta = @Id
+		UPDATE dbo.Recetas
+		SET IdStatus = 2
+		WHERE IdReceta = @Id
+		DELETE FROM dbo.Ingrediente WHERE IdReceta = @Id
+	END
 
 go
 

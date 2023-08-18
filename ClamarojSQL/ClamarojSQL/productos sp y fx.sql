@@ -30,8 +30,8 @@ BEGIN
     END
     ELSE
     BEGIN
-        INSERT INTO dbo.Productos(IdProducto, Codigo, Nombre, Descripcion, Precio, Foto, Merma, IdStatus, FechaRegistro, FechaModificacion)
-        VALUES (@IdProducto, @Codigo, @Nombre, @Descripcion, @Precio, @Foto, @Merma, @IdStatus, GETDATE(), GETDATE())
+        INSERT INTO dbo.Productos(Codigo, Nombre, Descripcion, Precio, Foto, Merma, IdStatus, FechaRegistro, FechaModificacion)
+        VALUES (@Codigo, @Nombre, @Descripcion, @Precio, @Foto, @Merma, @IdStatus, GETDATE(), GETDATE())
 
         SET @IdProducto = SCOPE_IDENTITY()
     END
