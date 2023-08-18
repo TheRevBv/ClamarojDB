@@ -45,7 +45,7 @@ GO
 -- Procedimiento almacenado para insertar o actualizar una receta
 CREATE PROCEDURE dbo.RecetasUPD
     @Id int out,
-    @Codigo varchar(10),
+    @Codigo varchar(25),
 	@Costo decimal(18,4),
 	@Cantidad decimal(18,4),
     @IdProducto int,

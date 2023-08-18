@@ -12,7 +12,7 @@ CREATE PROCEDURE dbo.ProveedoresUPD
     @Foto TEXT,
     @IdStatus int,
     @Rfc varchar(50),
-    @Direccion varchar(50),
+    @Direccion varchar(255),
     @Telefono varchar(13),
     @RazonSocial varchar(120),
     @Password varchar(MAX)

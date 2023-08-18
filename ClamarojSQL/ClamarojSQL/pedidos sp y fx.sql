@@ -12,7 +12,7 @@ CREATE PROCEDURE dbo.PedidosUPD
     @IdStatus int,
     @Fecha datetime,
     @FechaEntrega datetime,
-    @Domicilio varchar(45),
+    @Domicilio varchar(255),
     @Telefono varchar(10),
     @RazonSocial varchar(45),
     @Rfc varchar(13),

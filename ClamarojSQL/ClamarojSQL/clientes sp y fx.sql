@@ -14,7 +14,7 @@ CREATE PROCEDURE dbo.ClientesUPD
     @Password varchar(MAX),
     @IdStatus int,
     @Rfc varchar(13),
-    @Direccion varchar(50),
+    @Direccion varchar(255),
     @Telefono varchar(10)
 AS
 BEGIN

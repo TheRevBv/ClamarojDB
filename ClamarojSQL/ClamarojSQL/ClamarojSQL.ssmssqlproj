@@ -31,6 +31,18 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
+        <FileNode Name="ClamaRoj Ins Fix.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>ClamaRoj Ins Fix.sql</FullPath>
+        </FileNode>
+        <FileNode Name="CLAMAROJ QUERY CORRECTO.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>CLAMAROJ QUERY CORRECTO.sql</FullPath>
+        </FileNode>
         <FileNode Name="clientes sp y fx.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
