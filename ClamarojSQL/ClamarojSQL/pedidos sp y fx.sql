@@ -106,7 +106,7 @@ BEGIN
 END
 GO
 
--- Función para obtener todos los pedidos
+-- Funciï¿½n para obtener todos los pedidos
 CREATE FUNCTION dbo.fxGetPedidos()
 RETURNS TABLE
 AS
@@ -132,7 +132,7 @@ RETURN
 )
 GO
 
--- Función para obtener un pedido por su ID
+-- Funciï¿½n para obtener un pedido por su ID
 CREATE FUNCTION dbo.fxGetPedido(@Id int)
 RETURNS TABLE
 AS
@@ -157,6 +157,33 @@ RETURN
     WHERE P.IdPedido = @Id
 )
 GO
+
+CREATE FUNCTION dbo.fxGetPedidosByUsuario(@Id int)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT P.IdPedido AS idPedido, 
+           P.IdUsuario AS idUsuario,
+           P.IdStatus as idStatus,
+           P.Fecha as fecha, 
+           P.FechaEntrega as fechaEntrega,
+           P.Domicilio as domicilio, 
+           P.Telefono as telefono,
+           P.RazonSocial as razonSocial, 
+           P.Rfc as rfc,
+           TRIM(P.TipoPago) as tipoPago, 
+           TRIM(P.TipoEnvio) as tipoEnvio, 
+           TRIM(P.TipoPedido) as tipoPedido,
+           P.Total as total,
+		   E.Nombre as estatus
+    FROM dbo.Pedidos P
+    --JOIN dbo.Usuarios U ON U.Id = P.IdUsuario
+    JOIN dbo.Estatus E ON E.Id = P.IdStatus
+    WHERE P.IdUsuario = @Id
+	AND P.TipoPedido = 'C'
+)
+
 ---Para correcciones en llaves primaria identity 1,1
 /*
 DROP TABLE DetallePedidos
@@ -259,15 +286,15 @@ The conflict occurred in database "Clamaroj", table "dbo.Pedidos", column 'IdPed
 The statement has been terminated.
 
 
-Excepción no controlada del tipo 'System.Exception' en System.Private.CoreLib.dll
+Excepciï¿½n no controlada del tipo 'System.Exception' en System.Private.CoreLib.dll
 The INSERT statement conflicted with the FOREIGN KEY constraint "FK__DetallePe__IdPed__607251E5". The conflict occurred in database "Clamaroj", table "dbo.Pedidos", column 'IdPedido'.
 The statement has been terminated.
 
-Excepción no controlada del tipo 'System.Exception' en System.Private.CoreLib.dll
+Excepciï¿½n no controlada del tipo 'System.Exception' en System.Private.CoreLib.dll
 The INSERT statement conflicted with the FOREIGN KEY constraint "FK__DetallePe__IdPed__607251E5". The conflict occurred in database "Clamaroj", table "dbo.Pedidos", column 'IdPedido'.
 The statement has been terminated.
 
-Excepción producida: 'Microsoft.Data.SqlClient.SqlException' en Microsoft.Data.SqlClient.dll
-El programa '[17720] ClamarojBack.exe' terminó con código 0 (0x0).
+Excepciï¿½n producida: 'Microsoft.Data.SqlClient.SqlException' en Microsoft.Data.SqlClient.dll
+El programa '[17720] ClamarojBack.exe' terminï¿½ con cï¿½digo 0 (0x0).
 
 */

@@ -5,6 +5,10 @@ go
 -- delete from Productos
 -- DBCC CHECKIDENT ('Productos', RESEED, 0);
 go
+
+--Revisar antes de ejecutar, para que primero agregue los seeders del proyecto
+select * from Usuarios
+
 select * from productos
 select * from MateriasPrimas
 
@@ -1388,6 +1392,7 @@ VALUES
 
 
 select * from Pedidos
+select * from DetallePedidos
 
 	----- ESTOS UPDATES SON NECESARIOS PARA QUE CUADREN CON LA FECHA DE DETALLEPEDIDO---
 DECLARE @contador INT
