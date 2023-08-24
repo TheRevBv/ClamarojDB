@@ -63,11 +63,23 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT P.IdProveedor, U.Id, U.Nombre, U.Apellido, U.Correo, 
-    U.FechaNacimiento, U.Foto, U.IdStatus, 
-    P.Rfc, P.Direccion, P.Telefono, P.RazonSocial, U.Id as IdUsuario
-    FROM dbo.Proveedores P
-    INNER JOIN dbo.Usuarios U ON P.IdUsuario = U.Id    
+    SELECT 
+		P.IdProveedor AS idProveedor,
+		U.Nombre AS nombre, 
+		U.Apellido AS apellido, 
+		U.Correo AS correo, 
+		U.FechaNacimiento AS fechaNacimiento, 
+		U.Foto AS foto, 
+		U.IdStatus AS idStatus, 
+		P.Rfc AS rfc, 
+		P.Direccion AS direccion, 
+		P.Telefono AS telefono, 
+		P.RazonSocial AS razonSocial, 
+		U.Id AS idUsuario,
+		U.Password as password
+	FROM dbo.Proveedores P
+	INNER JOIN dbo.Usuarios U ON P.IdUsuario = U.Id
+   
 )
 
 GO
@@ -76,9 +88,22 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT P.IdProveedor, U.Id, U.Nombre, U.Apellido, U.Correo, U.FechaNacimiento, U.Foto, 
-    U.IdStatus, P.Rfc, P.Direccion, P.Telefono, P.RazonSocial, U.Id as IdUsuario, U.Password
-    FROM dbo.Proveedores P
-    INNER JOIN dbo.Usuarios U ON P.IdUsuario = U.Id
-    WHERE P.IdProveedor = @Id
+    SELECT 
+		P.IdProveedor AS idProveedor, 
+		U.Nombre AS nombre, 
+		U.Apellido AS apellido, 
+		U.Correo AS correo, 
+		U.FechaNacimiento AS fechaNacimiento, 
+		U.Foto AS foto, 
+		U.IdStatus AS idStatus, 
+		P.Rfc AS rfc, 
+		P.Direccion AS direccion, 
+		P.Telefono AS telefono, 
+		P.RazonSocial AS razonSocial, 
+		U.Id AS idUsuario, 
+		U.Password as password
+	FROM dbo.Proveedores P
+	INNER JOIN dbo.Usuarios U ON P.IdUsuario = U.Id
+	WHERE P.IdProveedor = @Id
+
 )

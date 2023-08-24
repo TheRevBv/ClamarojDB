@@ -1520,6 +1520,40 @@ END
 select * from pedidos
 
 
+GO
+INSERT INTO Pedidos (IdPedido, Fecha, IdUsuario, IdStatus, FechaEntrega, Domicilio, Telefono, RazonSocial, Rfc, TipoPago, TipoEnvio, TipoPedido, Total)
+VALUES
+    (245, '2023-06-01', 57, 1, '2023-05-05', 'Avenida Guanajuato - Colonia Obregón', '4771234567', 'Proveedor1', 'RFC111111A01', 'E', 'D', 'C', 150.50),
+    (246, '2023-06-02', 58, 1, '2023-05-06', 'Calle Yucatán - Colonia Jardines de Jerez', '4772345678', 'Proveedor2', 'RFC222222A02', 'TC', 'T', 'C', 200.00),
+    (247, '2023-06-03', 59, 1, '2023-05-07', 'Avenida Insurgentes - Colonia Chapalita', '4773456789', 'Proveedor3', 'RFC333333A03', 'TD', 'D', 'C', 120.75),
+    (248, '2023-06-04', 60, 1, '2023-05-08', 'Calle Hidalgo - Colonia Las Torres', '4774567890', 'Proveedor4', 'RFC444444A04', 'TB', 'T', 'C', 85.20),
+    (249, '2023-06-05', 61, 1, '2023-05-09', 'Avenida Chapultepec - Colonia San Felipe', '4775678901', 'Proveedor5', 'RFC555555A05', 'E', 'D', 'C', 300.00),
+    (250, '2023-06-06', 62, 1, '2023-05-10', 'Calle Querétaro - Colonia El Dorado', '4776789012', 'Proveedor6', 'RFC666666A06', 'TC', 'T', 'C', 75.50),
+    (251, '2023-06-07', 63, 1, '2023-05-11', 'Avenida Juárez - Colonia Los Gavilanes', '4777890123', 'Proveedor7', 'RFC777777A07', 'TD', 'D', 'C', 210.25),
+    (252, '2023-06-08', 64, 1, '2023-05-12', 'Calle Morelos - Colonia San Isidro', '4778901234', 'Proveedor8', 'RFC888888A08', 'TB', 'T', 'C', 95.80),
+    (253, '2023-06-09', 57, 1, '2023-05-13', 'Avenida Reforma - Colonia La Moderna', '4779012345', 'Proveedor9', 'RFC999999A09', 'E', 'D', 'C', 180.60),
+    (254, '2023-06-10', 58, 1, '2023-05-14', 'Calle Zacatecas - Colonia La Brisa', '4770123456', 'Proveedor10', 'RFC101010A10', 'TC', 'T', 'C', 250.75);
+
+INSERT INTO Pedidos (IdPedido, Fecha, IdUsuario, IdStatus, FechaEntrega, Domicilio, Telefono, RazonSocial, Rfc, TipoPago, TipoEnvio, TipoPedido, Total)
+VALUES
+    (255, '2023-07-01', 57, 1, '2023-05-05', 'Avenida Guanajuato - Colonia Obregón', '4771234567', 'Proveedor1', 'RFC111111A01', 'E', 'D', 'C', 150.50+10),
+    (256, '2023-07-02', 58, 1, '2023-05-06', 'Calle Yucatán - Colonia Jardines de Jerez', '4772345678', 'Proveedor2', 'RFC222222A02', 'TC', 'T', 'C', 200.00+23),
+    (257, '2023-07-03', 59, 1, '2023-05-07', 'Avenida Insurgentes - Colonia Chapalita', '4773456789', 'Proveedor3', 'RFC333333A03', 'TD', 'D', 'C', 120.75-20),
+    (258, '2023-07-04', 60, 1, '2023-05-08', 'Calle Hidalgo - Colonia Las Torres', '4774567890', 'Proveedor4', 'RFC444444A04', 'TB', 'T', 'C', 85.20+35),
+    (259, '2023-07-05', 61, 1, '2023-05-09', 'Avenida Chapultepec - Colonia San Felipe', '4775678901', 'Proveedor5', 'RFC555555A05', 'E', 'D', 'C', 300.00-50),
+    (260, '2023-07-06', 62, 1, '2023-05-10', 'Calle Querétaro - Colonia El Dorado', '4776789012', 'Proveedor6', 'RFC666666A06', 'TC', 'T', 'C', 75.50+10),
+    (261, '2023-07-07', 63, 1, '2023-05-11', 'Avenida Juárez - Colonia Los Gavilanes', '4777890123', 'Proveedor7', 'RFC777777A07', 'TD', 'D', 'C', 210.25+20),
+    (262, '2023-07-08', 64, 1, '2023-05-12', 'Calle Morelos - Colonia San Isidro', '4778901234', 'Proveedor8', 'RFC888888A08', 'TB', 'T', 'C', 95.80+30),
+    (263, '2023-07-09', 57, 1, '2023-05-13', 'Avenida Reforma - Colonia La Moderna', '4779012345', 'Proveedor9', 'RFC999999A09', 'E', 'D', 'C', 180.60+10),
+    (264, '2023-07-10', 58, 1, '2023-05-14', 'Calle Zacatecas - Colonia La Brisa', '4770123456', 'Proveedor10', 'RFC101010A10', 'TC', 'T', 'C', 250.75+20);
+GO
+
+INSERT INTO Compras (Fecha, IdPedido, IdProveedor, Total)
+SELECT  PT.Fecha, PT.IdPedido, P.IdProveedor, PT.Total + 30
+FROM Pedidos PT
+JOIN dbo.Proveedores P
+ON P.IdUsuario = PT.IdUsuario
+where IdPedido>254
 
 
 

@@ -67,6 +67,12 @@
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>estatus sp y fx.sql</FullPath>
         </FileNode>
+        <FileNode Name="ETL fx.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>ETL fx.sql</FullPath>
+        </FileNode>
         <FileNode Name="ids to table fx.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:EC0355:False:sa</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>EC0355</AssociatedConnSrvName>
