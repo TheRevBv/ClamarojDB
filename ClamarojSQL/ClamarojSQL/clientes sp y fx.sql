@@ -43,7 +43,7 @@ END
 
 GO
 
-CREATE PROCEDURE dbo.ClienteDEL
+CREATE PROCEDURE dbo.ClientesDEL
     @Id int
 AS
 BEGIN
@@ -61,9 +61,20 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT C.IdCliente, U.Nombre, U.Apellido, U.Correo, U.FechaNacimiento, U.Foto, U.IdStatus, C.Rfc, C.Direccion, C.Telefono
-    FROM dbo.Clientes C
-    INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id    
+    SELECT
+        C.IdCliente as idCliente,
+        U.Nombre as nombre,
+        U.Apellido as apellido,
+        U.Correo as correo,
+        U.FechaNacimiento as fechaNacimiento,
+        U.Foto as foto,
+        U.IdStatus as idStatus,
+        C.Rfc as rfc,
+        C.Direccion as direccion,
+        C.Telefono as telefono
+    FROM
+        dbo.Clientes C
+        INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id    
 )
 GO
 CREATE FUNCTION dbo.fxGetCliente(@Id int)
@@ -71,25 +82,46 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT C.IdCliente, U.Nombre, U.Apellido, U.Correo, U.FechaNacimiento, 
-    U.Foto, U.IdStatus, C.Rfc, C.Direccion, C.Telefono, U.Id as IdUsuario
-    , U.Password
+    SELECT C.IdCliente as idCliente, 
+	U.Nombre as nombre, 
+	U.Apellido as apellido, 
+	U.Correo as correo, 
+	U.FechaNacimiento as fechaNacimiento, 
+    U.Foto as foto, 
+	U.IdStatus as idStatus, 
+	C.Rfc as rfc, 
+	C.Direccion as direccion, 
+	C.Telefono as telefono, 
+	U.Id as idUsuario, 
+	U.Password as password
     FROM dbo.Clientes C
     INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id
     WHERE C.IdCliente = @Id
 )
 
 GO
-CREATE FUNCTION dbo.fxGetClienteByUsuario(@IdUsuario int)
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT C.IdCliente, U.Nombre, U.Apellido, U.Correo, U.FechaNacimiento, U.Foto, U.IdStatus, C.Rfc, C.Direccion, C.Telefono
-    FROM dbo.Clientes C
-    INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id
-    WHERE C.IdUsuario = @IdUsuario
-)
+	CREATE FUNCTION dbo.fxGetClienteByUsuario(@IdUsuario int)
+	RETURNS TABLE
+	AS
+	RETURN
+	(
+		SELECT
+		C.IdCliente as idCliente,
+		U.Nombre as nombre,
+		U.Apellido as apellido,
+		U.Correo as correo,
+		U.FechaNacimiento as fechaNacimiento,
+		U.Foto as foto,
+		U.IdStatus as idStatus,
+		C.Rfc as rfc,
+		C.Direccion as direccion,
+		C.Telefono as telefono
+	FROM
+		dbo.Clientes C with(readuncommitted)
+		INNER JOIN dbo.Usuarios U ON C.IdUsuario = U.Id
+	WHERE
+		C.IdUsuario = @IdUsuario
+	)
 
 GO
 -- EXEC dbo.ClientesUPD 4, 11, 'Juan', 'Perez','cli1@clamaroj.com' ,'20020910', 'foto', '123', 1, 'MMMM123456MMM', 'DIREE', '4771234567'

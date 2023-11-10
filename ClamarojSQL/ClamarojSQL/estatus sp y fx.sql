@@ -37,7 +37,7 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT Id as IdEstatus, Nombre
+    SELECT Id as idStatus, Nombre as nombre
     FROM dbo.Estatus
 )
 
@@ -50,7 +50,10 @@ RETURNS TABLE
 AS
 RETURN
 (
-    SELECT Id as IdEstatus, Nombre
+    SELECT Id as idStatus, Nombre as nombre
     FROM dbo.Estatus WHERE Id = @Id
 )
 GO
+
+
+SELECT * FROM fxGetClientes()

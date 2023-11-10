@@ -80,7 +80,14 @@ RETURNS TABLE
 AS
 RETURN 
 (
-	SELECT U.Id,U.Nombre,U.Apellido, U.Correo, U.FechaNacimiento, U.Foto, E.Nombre AS Estatus, U.IdStatus--, R.Id as IdRol, R.Nombre AS Roles
+	SELECT U.Id as id,
+	U.Nombre as nombre,
+	U.Apellido as apellido, 
+	U.Correo as correo, 
+	U.FechaNacimiento as fechaNacimiento, 
+	U.Foto as foto, 
+	E.Nombre AS estatus, 
+	U.idStatus--, R.Id as IdRol, R.Nombre AS Roles
 	FROM dbo.Usuarios U
 	--JOIN dbo.RolesUsuarios RU
 	--	ON RU.IdUsuario = U.Id
@@ -100,7 +107,7 @@ returns table
 as
 return
 (
-	select R.Id, R.Nombre
+	select R.Id as id, R.Nombre as nombre
 	from dbo.RolesUsuarios RU
 	join dbo.Roles R
 		on R.Id = RU.IdRol
@@ -125,7 +132,14 @@ RETURNS TABLE
 AS
 RETURN
 (
-	SELECT U.Id,U.Nombre,U.Apellido, U.Correo, U.FechaNacimiento, U.Foto, E.Nombre AS Estatus, U.IdStatus--, R.Id as IdRol, R.Nombre AS Roles
+	SELECT U.id,
+	U.Nombre as nombre,
+	U.Apellido as apellido, 
+	U.Correo as correo, 
+	U.FechaNacimiento as fechaNacimiento, 
+	U.Foto as foto, 
+	E.Nombre AS estatus, 
+	U.IdStatus as idEstatus--, R.Id as IdRol, R.Nombre AS Roles
 	FROM dbo.Usuarios U
 	--JOIN dbo.RolesUsuarios RU
 	--	ON RU.IdUsuario = U.Id
