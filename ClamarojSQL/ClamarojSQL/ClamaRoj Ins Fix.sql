@@ -9,6 +9,19 @@ go
 --Revisar antes de ejecutar, para que primero agregue los seeders del proyecto
 select * from Usuarios
 
+update dbo.Usuarios
+set [Password] = HASHBYTES('SHA2_512', 'Admin123')
+where Id = 1
+
+update dbo.Usuarios
+set [Password] = HASHBYTES('SHA2_512', 'Proveedor123')
+where Id = 2
+
+update dbo.Usuarios
+set [Password] = HASHBYTES('SHA2_512', 'Cliente123')
+where Id = 3
+
+
 select * from productos
 select * from MateriasPrimas
 
@@ -47,72 +60,72 @@ GO
 GO
 SELECT * FROM dbo.Usuarios
 
-INSERT INTO Usuarios (Nombre, Apellido, Correo, Password, Foto, FechaNacimiento, FechaRegistro, IdStatus)
+INSERT INTO Usuarios (Nombre, Apellido, Correo, [Password], Foto, FechaNacimiento, FechaRegistro, IdStatus)
 VALUES
-    ('Jorge', 'Martínez', 'cliente22@mail.com', 'cliente22', 'jorge.jpg', '1985-06-20', '2023-05-12', 1),
-    ('Sofía', 'Hernández', 'cliente23@mail.com', 'cliente23', 'sofia.jpg', '1992-07-10', '2023-05-14', 1),
-    ('Carlos', 'López', 'cliente24@mail.com', 'cliente24', 'carlos.jpg', '1988-11-03', '2023-05-16', 1),
-    ('María', 'Rodríguez', 'cliente25@mail.com', 'cliente25', 'maria.jpg', '1995-02-25', '2023-05-18', 1),
-    ('José', 'Gómez', 'cliente26@mail.com', 'cliente26', 'jose.jpg', '1987-06-18', '2023-05-20', 1),
-    ('Laura', 'Pérez', 'cliente27@mail.com', 'cliente27', 'laura.jpg', '1993-09-08', '2023-05-22', 1),
-    ('Andrés', 'Díaz', 'cliente28@mail.com', 'cliente28', 'andres.jpg', '1989-12-21', '2023-05-24', 1),
-    ('Isabel', 'Torres', 'cliente29@mail.com', 'cliente29', 'isabel.jpg', '1997-03-14', '2023-05-26', 1),
-    ('David', 'Flores', 'cliente30@mail.com', 'cliente30', 'david.jpg', '1994-07-27', '2023-05-28', 1),
-    ('Ana', 'Sánchez', 'cliente31@mail.com', 'cliente31', 'ana.jpg', '1990-04-15', '2023-05-10', 1),
-    ('Jorge', 'Ramírez', 'cliente32@mail.com', 'cliente32', 'jorge.jpg', '1985-06-20', '2023-05-12', 1),
-    ('Sofía', 'Morales', 'cliente33@mail.com', 'cliente33', 'sofia.jpg', '1992-07-10', '2023-05-14', 1),
-    ('Carlos', 'Vargas', 'cliente34@mail.com', 'cliente34', 'carlos.jpg', '1988-11-03', '2023-05-16', 1),
-    ('María', 'Luna', 'cliente35@mail.com', 'cliente35', 'maria.jpg', '1995-02-25', '2023-05-18', 1);
+    ('Jorge', 'Martínez', 'cliente22@mail.com',		HASHBYTES('SHA2_256', 'cliente22'), 'jorge.jpg', '1985-06-20', '2023-05-12', 1),
+    ('Sofía', 'Hernández', 'cliente23@mail.com',	HASHBYTES('SHA2_256', 'cliente23'), 'sofia.jpg', '1992-07-10', '2023-05-14', 1),
+    ('Carlos', 'López', 'cliente24@mail.com',		HASHBYTES('SHA2_256', 'cliente24'), 'carlos.jpg', '1988-11-03', '2023-05-16', 1),
+    ('María', 'Rodríguez', 'cliente25@mail.com',	HASHBYTES('SHA2_256', 'cliente25'), 'maria.jpg', '1995-02-25', '2023-05-18', 1),
+    ('José', 'Gómez', 'cliente26@mail.com',			HASHBYTES('SHA2_256', 'cliente26'), 'jose.jpg', '1987-06-18', '2023-05-20', 1),
+    ('Laura', 'Pérez', 'cliente27@mail.com',		HASHBYTES('SHA2_256', 'cliente27'), 'laura.jpg', '1993-09-08', '2023-05-22', 1),
+    ('Andrés', 'Díaz', 'cliente28@mail.com',		HASHBYTES('SHA2_256', 'cliente28'), 'andres.jpg', '1989-12-21', '2023-05-24', 1),
+    ('Isabel', 'Torres', 'cliente29@mail.com',		HASHBYTES('SHA2_256', 'cliente29'), 'isabel.jpg', '1997-03-14', '2023-05-26', 1),
+    ('David', 'Flores', 'cliente30@mail.com',		HASHBYTES('SHA2_256', 'cliente30'), 'david.jpg', '1994-07-27', '2023-05-28', 1),
+    ('Ana', 'Sánchez', 'cliente31@mail.com',		HASHBYTES('SHA2_256', 'cliente31'), 'ana.jpg', '1990-04-15', '2023-05-10', 1),
+    ('Jorge', 'Ramírez', 'cliente32@mail.com',		HASHBYTES('SHA2_256', 'cliente32'), 'jorge.jpg', '1985-06-20', '2023-05-12', 1),
+    ('Sofía', 'Morales', 'cliente33@mail.com',		HASHBYTES('SHA2_256', 'cliente33'), 'sofia.jpg', '1992-07-10', '2023-05-14', 1),
+    ('Carlos', 'Vargas', 'cliente34@mail.com',		HASHBYTES('SHA2_256', 'cliente34'), 'carlos.jpg', '1988-11-03', '2023-05-16', 1),
+    ('María', 'Luna', 'cliente35@mail.com',			HASHBYTES('SHA2_256', 'cliente35'), 'maria.jpg', '1995-02-25', '2023-05-18', 1);
 
 GO
 --SELECT * FROM dbo.Usuarios
 
 -- Usuarios Mes Junio
-INSERT INTO Usuarios (Nombre, Apellido, Correo, Password, Foto, FechaNacimiento, FechaRegistro, IdStatus)
+INSERT INTO Usuarios (Nombre, Apellido, Correo, [Password], Foto, FechaNacimiento, FechaRegistro, IdStatus)
 VALUES
-    ('Luis', 'López', 'cliente36@mail.com', 'cliente36', 'luis.jpg', '1991-06-15', '2023-06-05', 1),
-    ('Alejandra', 'González', 'cliente37@mail.com', 'cliente37', 'alejandra.jpg', '1984-06-20', '2023-06-08', 1),
-    ('Roberto', 'Vega', 'cliente38@mail.com', 'cliente38', 'roberto.jpg', '1993-06-10', '2023-06-12', 1),
-    ('Fernanda', 'Morales', 'cliente39@mail.com', 'cliente39', 'fernanda.jpg', '1989-06-03', '2023-06-15', 1),
-    ('Miguel', 'Hernández', 'cliente40@mail.com', 'cliente40', 'miguel.jpg', '1996-06-25', '2023-06-18', 1),
-    ('Diana', 'Martínez', 'cliente41@mail.com', 'cliente41', 'diana.jpg', '1988-06-18', '2023-06-22', 1),
-    ('Javier', 'Sánchez', 'cliente42@mail.com', 'cliente42', 'javier.jpg', '1994-06-10', '2023-06-26', 1),
-    ('Adriana', 'Ramírez', 'cliente43@mail.com', 'cliente43', 'adriana.jpg', '1990-06-23', '2023-06-29', 1),
-    ('Héctor', 'Castro', 'cliente44@mail.com', 'cliente44', 'hector.jpg', '1998-06-14', '2023-06-03', 1),
-    ('Paola', 'Luna', 'cliente45@mail.com', 'cliente45', 'paola.jpg', '1995-06-27', '2023-06-07', 1),
-    ('Manuel', 'Torres', 'cliente46@mail.com', 'cliente46', 'manuel.jpg', '1992-06-20', '2023-06-10', 1),
-    ('Mariana', 'Pérez', 'cliente47@mail.com', 'cliente47', 'mariana.jpg', '1987-06-13', '2023-06-14', 1),
-    ('Ricardo', 'García', 'cliente48@mail.com', 'cliente48', 'ricardo.jpg', '1983-06-26', '2023-06-17', 1),
-    ('Ana María', 'Díaz', 'cliente49@mail.com', 'cliente49', 'ana_maria.jpg', '1997-06-09', '2023-06-21', 1),
-    ('Juan Pablo', 'Fernández', 'cliente50@mail.com', 'cliente50', 'juan_pablo.jpg', '1994-06-22', '2023-06-25', 1),
-    ('Sara', 'Gómez', 'cliente51@mail.com', 'cliente51', 'sara.jpg', '1991-06-05', '2023-06-28', 1),
-    ('Hugo', 'Álvarez', 'cliente52@mail.com', 'cliente52', 'hugo.jpg', '1989-06-18', '2023-06-02', 1),
-    ('Valentina', 'Juárez', 'cliente53@mail.com', 'cliente53', 'valentina.jpg', '1996-06-10', '2023-06-06', 1);
+    ('Luis', 'López', 'cliente36@mail.com',				HASHBYTES('SHA2_256','cliente36'), 'luis.jpg', '1991-06-15', '2023-06-05', 1),
+    ('Alejandra', 'González', 'cliente37@mail.com',		HASHBYTES('SHA2_256','cliente37'), 'alejandra.jpg', '1984-06-20', '2023-06-08', 1),
+    ('Roberto', 'Vega', 'cliente38@mail.com',			HASHBYTES('SHA2_256','cliente38'), 'roberto.jpg', '1993-06-10', '2023-06-12', 1),
+    ('Fernanda', 'Morales', 'cliente39@mail.com',		HASHBYTES('SHA2_256','cliente39'), 'fernanda.jpg', '1989-06-03', '2023-06-15', 1),
+    ('Miguel', 'Hernández', 'cliente40@mail.com',		HASHBYTES('SHA2_256','cliente40'), 'miguel.jpg', '1996-06-25', '2023-06-18', 1),
+    ('Diana', 'Martínez', 'cliente41@mail.com',			HASHBYTES('SHA2_256','cliente41'), 'diana.jpg', '1988-06-18', '2023-06-22', 1),
+    ('Javier', 'Sánchez', 'cliente42@mail.com',			HASHBYTES('SHA2_256','cliente42'), 'javier.jpg', '1994-06-10', '2023-06-26', 1),
+    ('Adriana', 'Ramírez', 'cliente43@mail.com',		HASHBYTES('SHA2_256','cliente43'), 'adriana.jpg', '1990-06-23', '2023-06-29', 1),
+    ('Héctor', 'Castro', 'cliente44@mail.com',			HASHBYTES('SHA2_256','cliente44'), 'hector.jpg', '1998-06-14', '2023-06-03', 1),
+    ('Paola', 'Luna', 'cliente45@mail.com',				HASHBYTES('SHA2_256','cliente45'), 'paola.jpg', '1995-06-27', '2023-06-07', 1),
+    ('Manuel', 'Torres', 'cliente46@mail.com',			HASHBYTES('SHA2_256','cliente46'), 'manuel.jpg', '1992-06-20', '2023-06-10', 1),
+    ('Mariana', 'Pérez', 'cliente47@mail.com',			HASHBYTES('SHA2_256','cliente47'), 'mariana.jpg', '1987-06-13', '2023-06-14', 1),
+    ('Ricardo', 'García', 'cliente48@mail.com',			HASHBYTES('SHA2_256','cliente48'), 'ricardo.jpg', '1983-06-26', '2023-06-17', 1),
+    ('Ana María', 'Díaz', 'cliente49@mail.com',			HASHBYTES('SHA2_256','cliente49'), 'ana_maria.jpg', '1997-06-09', '2023-06-21', 1),
+    ('Juan Pablo', 'Fernández', 'cliente50@mail.com',	HASHBYTES('SHA2_256','cliente50'), 'juan_pablo.jpg', '1994-06-22', '2023-06-25', 1),
+    ('Sara', 'Gómez', 'cliente51@mail.com',				HASHBYTES('SHA2_256','cliente51'), 'sara.jpg', '1991-06-05', '2023-06-28', 1),
+    ('Hugo', 'Álvarez', 'cliente52@mail.com',			HASHBYTES('SHA2_256','cliente52'), 'hugo.jpg', '1989-06-18', '2023-06-02', 1),
+    ('Valentina', 'Juárez', 'cliente53@mail.com',		HASHBYTES('SHA2_256','cliente53'), 'valentina.jpg', '1996-06-10', '2023-06-06', 1);
 
 -- Usuarios Mes Julio
-INSERT INTO Usuarios (Nombre, Apellido, Correo, Password, Foto, FechaNacimiento, FechaRegistro, IdStatus)
+INSERT INTO Usuarios (Nombre, Apellido, Correo, [Password], Foto, FechaNacimiento, FechaRegistro, IdStatus)
 VALUES
-    ('Eduardo', 'Soto', 'cliente54@mail.com', 'cliente54', 'eduardo.jpg', '1992-07-15', '2023-07-05', 1),
-    ('Fernando', 'Cruz', 'cliente55@mail.com', 'cliente55', 'fernando.jpg', '1983-07-20', '2023-07-08', 1),
-    ('Daniela', 'Lara', 'cliente56@mail.com', 'cliente56', 'daniela.jpg', '1991-07-10', '2023-07-12', 1),
-    ('Mónica', 'Ortega', 'cliente57@mail.com', 'cliente57', 'monica.jpg', '1987-07-03', '2023-07-15', 1),
-    ('Gustavo', 'Vargas', 'cliente58@mail.com', 'cliente58', 'gustavo.jpg', '1995-07-25', '2023-07-18', 1),
-    ('Patricia', 'Mendoza', 'cliente59@mail.com', 'cliente59', 'patricia.jpg', '1989-07-18', '2023-07-22', 1),
-    ('Rafael', 'Herrera', 'cliente60@mail.com', 'cliente60', 'rafael.jpg', '1993-07-10', '2023-07-26', 1),
-    ('Carmen', 'Montes', 'cliente61@mail.com', 'cliente61', 'carmen.jpg', '1985-07-23', '2023-07-29', 1),
-    ('Hugo', 'López', 'cliente62@mail.com', 'cliente62', 'hugo.jpg', '1998-07-14', '2023-07-03', 1),
-    ('Silvia', 'Sánchez', 'cliente63@mail.com', 'cliente63', 'silvia.jpg', '1996-07-27', '2023-07-07', 1),
-    ('Leonardo', 'García', 'cliente64@mail.com', 'cliente64', 'leonardo.jpg', '1992-07-20', '2023-07-10', 1),
-    ('Marisol', 'Pérez', 'cliente65@mail.com', 'cliente65', 'marisol.jpg', '1986-07-13', '2023-07-14', 1),
-    ('Elena', 'Ramírez', 'cliente66@mail.com', 'cliente66', 'elena.jpg', '1984-07-26', '2023-07-17', 1),
-    ('Manuel', 'Martínez', 'cliente67@mail.com', 'cliente67', 'manuel.jpg', '1990-07-09', '2023-07-21', 1),
-    ('Gabriela', 'Fernández', 'cliente68@mail.com', 'cliente68', 'gabriela.jpg', '1994-07-22', '2023-07-25', 1),
-    ('Joaquín', 'Hernández', 'cliente69@mail.com', 'cliente69', 'joaquin.jpg', '1997-07-05', '2023-07-28', 1),
-    ('Verónica', 'López', 'cliente70@mail.com', 'cliente70', 'veronica.jpg', '1991-07-18', '2023-07-02', 1),
-    ('Roberto', 'Gómez', 'cliente71@mail.com', 'cliente71', 'roberto.jpg', '1988-07-10', '2023-07-06', 1),
-    ('Ana Laura', 'Díaz', 'cliente72@mail.com', 'cliente72', 'ana_laura.jpg', '1993-07-20', '2023-07-09', 1),
-    ('Julián', 'Ortega', 'cliente73@mail.com', 'cliente73', 'julian.jpg', '1982-07-12', '2023-07-13', 1),
-    ('Santiago', 'Ortega', 'cliente74@mail.com', 'cliente74', 'santiago.jpg', '1992-07-28', '2023-07-16', 1);
+    ('Eduardo', 'Soto', 'cliente54@mail.com',			HASHBYTES('SHA2_256','cliente54'), 'eduardo.jpg', '1992-07-15', '2023-07-05', 1),
+    ('Fernando', 'Cruz', 'cliente55@mail.com',			HASHBYTES('SHA2_256','cliente55'), 'fernando.jpg', '1983-07-20', '2023-07-08', 1),
+    ('Daniela', 'Lara', 'cliente56@mail.com',			HASHBYTES('SHA2_256','cliente56'), 'daniela.jpg', '1991-07-10', '2023-07-12', 1),
+    ('Mónica', 'Ortega', 'cliente57@mail.com',			HASHBYTES('SHA2_256','cliente57'), 'monica.jpg', '1987-07-03', '2023-07-15', 1),
+    ('Gustavo', 'Vargas', 'cliente58@mail.com',			HASHBYTES('SHA2_256','cliente58'), 'gustavo.jpg', '1995-07-25', '2023-07-18', 1),
+    ('Patricia', 'Mendoza', 'cliente59@mail.com',		HASHBYTES('SHA2_256','cliente59'), 'patricia.jpg', '1989-07-18', '2023-07-22', 1),
+    ('Rafael', 'Herrera', 'cliente60@mail.com',			HASHBYTES('SHA2_256','cliente60'), 'rafael.jpg', '1993-07-10', '2023-07-26', 1),
+    ('Carmen', 'Montes', 'cliente61@mail.com',			HASHBYTES('SHA2_256','cliente61'), 'carmen.jpg', '1985-07-23', '2023-07-29', 1),
+    ('Hugo', 'López', 'cliente62@mail.com',				HASHBYTES('SHA2_256','cliente62'), 'hugo.jpg', '1998-07-14', '2023-07-03', 1),
+    ('Silvia', 'Sánchez', 'cliente63@mail.com',			HASHBYTES('SHA2_256','cliente63'), 'silvia.jpg', '1996-07-27', '2023-07-07', 1),
+    ('Leonardo', 'García', 'cliente64@mail.com',		HASHBYTES('SHA2_256','cliente64'), 'leonardo.jpg', '1992-07-20', '2023-07-10', 1),
+    ('Marisol', 'Pérez', 'cliente65@mail.com',			HASHBYTES('SHA2_256','cliente65'), 'marisol.jpg', '1986-07-13', '2023-07-14', 1),
+    ('Elena', 'Ramírez', 'cliente66@mail.com',			HASHBYTES('SHA2_256','cliente66'), 'elena.jpg', '1984-07-26', '2023-07-17', 1),
+    ('Manuel', 'Martínez', 'cliente67@mail.com',		HASHBYTES('SHA2_256','cliente67'), 'manuel.jpg', '1990-07-09', '2023-07-21', 1),
+    ('Gabriela', 'Fernández', 'cliente68@mail.com',		HASHBYTES('SHA2_256','cliente68'), 'gabriela.jpg', '1994-07-22', '2023-07-25', 1),
+    ('Joaquín', 'Hernández', 'cliente69@mail.com',		HASHBYTES('SHA2_256','cliente69'), 'joaquin.jpg', '1997-07-05', '2023-07-28', 1),
+    ('Verónica', 'López', 'cliente70@mail.com',			HASHBYTES('SHA2_256','cliente70'), 'veronica.jpg', '1991-07-18', '2023-07-02', 1),
+    ('Roberto', 'Gómez', 'cliente71@mail.com',			HASHBYTES('SHA2_256','cliente71'), 'roberto.jpg', '1988-07-10', '2023-07-06', 1),
+    ('Ana Laura', 'Díaz', 'cliente72@mail.com',			HASHBYTES('SHA2_256','cliente72'), 'ana_laura.jpg', '1993-07-20', '2023-07-09', 1),
+    ('Julián', 'Ortega', 'cliente73@mail.com',			HASHBYTES('SHA2_256','cliente73'), 'julian.jpg', '1982-07-12', '2023-07-13', 1),
+    ('Santiago', 'Ortega', 'cliente74@mail.com',		HASHBYTES('SHA2_256','cliente74'), 'santiago.jpg', '1992-07-28', '2023-07-16', 1);
 
 
 go
@@ -120,9 +133,9 @@ go
 
 go
 
-UPDATE dbo.Usuarios
-SET [Password] = LOWER(CONVERT(NVARCHAR(MAX),HASHBYTES('SHA2_256', [Password]),2))
-WHERE Id NOT IN (1,2,3)
+--UPDATE dbo.Usuarios
+--SET [Password] = HASHBYTES('SHA2_256', [Password])
+--WHERE Id NOT IN (1,2,3)
 
 select * from usuarios
 go
@@ -227,22 +240,22 @@ DECLARE @IdUsuarioFin INT
 , 
 @IdUsuarioIni INT = (SELECT MAX(Id) FROM Usuarios)
 
-INSERT INTO Usuarios (Nombre, Apellido, Correo, Password, Foto, FechaNacimiento, FechaRegistro, IdStatus)
+INSERT INTO Usuarios (Nombre, Apellido, Correo, [Password], Foto, FechaNacimiento, FechaRegistro, IdStatus)
 VALUES
-    ('Snacks International', 'S.A. de C.V.', 'proveedor75@example.com', 'proveedor75', 'snacks_international.jpg', '1980-05-15', '2023-05-02', 1),
-    ('Bebidas Refrescantes', 'S.A. de C.V.', 'proveedor76@example.com', 'proveedor76', 'bebidas_refrescantes.jpg', '1975-05-20', '2023-05-05', 1),
-    ('Chips y Dips', 'S.A. de C.V.', 'proveedor77@example.com', 'proveedor77', 'chips_dips.jpg', '1988-05-10', '2023-05-08', 1),
-    ('Micheladas Deluxe', 'S.A. de C.V.', 'proveedor78@example.com', 'proveedor78', 'micheladas_deluxe.jpg', '1993-05-03', '2023-05-11', 1),
-    ('Sabores Saludables', 'S.A. de C.V.', 'proveedor79@example.com', 'proveedor79', 'sabores_saludables.jpg', '1985-05-18', '2023-05-14', 1),
-    ('Barras Energéticas', 'S.A. de C.V.', 'proveedor80@example.com', 'proveedor80', 'barras_energeticas.jpg', '1990-05-06', '2023-05-17', 1),
-    ('Especias y Condimentos', 'S.A. de C.V.', 'proveedor81@example.com', 'proveedor81', 'especias_condimentos.jpg', '1983-05-22', '2023-05-20', 1),
-    ('Snacks y Botanas Creativas', 'S.A. de C.V.', 'proveedor82@example.com', 'proveedor82', 'snacks_botanas_creativas.jpg', '1977-05-12', '2023-05-23', 1);
+    ('Snacks International', 'S.A. de C.V.', 'proveedor75@example.com',			HASHBYTES('SHA2_256','proveedor75'), 'snacks_international.jpg', '1980-05-15', '2023-05-02', 1),
+    ('Bebidas Refrescantes', 'S.A. de C.V.', 'proveedor76@example.com',			HASHBYTES('SHA2_256','proveedor76'), 'bebidas_refrescantes.jpg', '1975-05-20', '2023-05-05', 1),
+    ('Chips y Dips', 'S.A. de C.V.', 'proveedor77@example.com',					HASHBYTES('SHA2_256','proveedor77'), 'chips_dips.jpg', '1988-05-10', '2023-05-08', 1),
+    ('Micheladas Deluxe', 'S.A. de C.V.', 'proveedor78@example.com',			HASHBYTES('SHA2_256','proveedor78'), 'micheladas_deluxe.jpg', '1993-05-03', '2023-05-11', 1),
+    ('Sabores Saludables', 'S.A. de C.V.', 'proveedor79@example.com',			HASHBYTES('SHA2_256','proveedor79'), 'sabores_saludables.jpg', '1985-05-18', '2023-05-14', 1),
+    ('Barras Energéticas', 'S.A. de C.V.', 'proveedor80@example.com',			HASHBYTES('SHA2_256','proveedor80'), 'barras_energeticas.jpg', '1990-05-06', '2023-05-17', 1),
+    ('Especias y Condimentos', 'S.A. de C.V.', 'proveedor81@example.com',		HASHBYTES('SHA2_256','proveedor81'), 'especias_condimentos.jpg', '1983-05-22', '2023-05-20', 1),
+    ('Snacks y Botanas Creativas', 'S.A. de C.V.', 'proveedor82@example.com',	HASHBYTES('SHA2_256','proveedor82'), 'snacks_botanas_creativas.jpg', '1977-05-12', '2023-05-23', 1);
 
 --SET @IdUsuarioFin = SCOPE_IDENTITY()
-select * from Usuarios
-UPDATE dbo.Usuarios
-SET [Password] = LOWER(CONVERT(NVARCHAR(MAX),HASHBYTES('SHA2_256', [Password]),2))
-WHERE Id > @IdUsuarioIni
+--select * from Usuarios
+--UPDATE dbo.Usuarios
+--SET [Password] = LOWER(CONVERT(NVARCHAR(MAX),HASHBYTES('SHA2_256', [Password]),2))
+--WHERE Id > @IdUsuarioIni
 
 ---Insercion rolesusuarios PROVEEDORES -----
 INSERT INTO RolesUsuarios(IdUsuario, IdRol)
@@ -1554,7 +1567,5 @@ FROM Pedidos PT
 JOIN dbo.Proveedores P
 ON P.IdUsuario = PT.IdUsuario
 where IdPedido>254
-
-
 
 
