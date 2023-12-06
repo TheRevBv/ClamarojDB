@@ -29,7 +29,7 @@ BEGIN
 	IF EXISTS(SELECT Id FROM dbo.Usuarios WHERE Id = @Id)
 	BEGIN
 		SELECT @PassAntigua = [Password] FROM dbo.Usuarios WHERE Id = @Id
-		SET @PasswordEncrypt = HASHBYTES('SHA2_256', @Password)
+		SET @PasswordEncrypt = HASHBYTES('SHA2_512', @Password)
 
 		SET @Password = IIF(@PassAntigua = @Password, @Password, @PasswordEncrypt)
 
@@ -46,7 +46,7 @@ BEGIN
 	ELSE
 	BEGIN
 		INSERT INTO dbo.Usuarios(Nombre, Apellido, Correo, FechaNacimiento, Foto, IdStatus, FechaRegistro, [Password])
-		VALUES (@Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, GETDATE(), HASHBYTES('SHA2_256', @Password))
+		VALUES (@Nombre, @Apellido, @Correo, @FechaNacimiento, @Foto, @IdStatus, GETDATE(), HASHBYTES('SHA2_512', @Password))
 
 		-- Obtener el ID del usuario recién insertado
 		SET @Id = SCOPE_IDENTITY()
