@@ -82,3 +82,37 @@ BEGIN
 
 END
 
+GO
+
+	CREATE PROCEDURE dbo.MermasUPD
+	@IdPedido INT
+AS
+BEGIN
+	IF EXISTS(SELECT * FROM dbo.Pedidos WHERE IdPedido = @IdPedido)
+	BEGIN TRANSACTION;
+
+	DECLARE @idProducto INT, @cantidadVendida INT;
+
+	-- Obtener los detalles del pedido
+	DECLARE detalles_cursor CURSOR FOR
+	SELECT idProducto, cantidad FROM dbo.DetallePedidos WHERE idPedido = @idPedido;
+
+	OPEN detalles_cursor;
+
+	FETCH NEXT FROM detalles_cursor INTO @idProducto, @cantidadVendida;
+
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		-- Reducir las existencias de cada producto
+		UPDATE dbo.Productos SET merma = merma + @cantidadVendida WHERE idProducto = @idProducto;
+
+		FETCH NEXT FROM detalles_cursor INTO @idProducto, @cantidadVendida;
+	END
+
+	CLOSE detalles_cursor;
+	DEALLOCATE detalles_cursor;
+
+	COMMIT TRANSACTION;
+
+END
+
