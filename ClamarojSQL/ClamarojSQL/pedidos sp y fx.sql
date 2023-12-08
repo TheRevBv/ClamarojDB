@@ -158,7 +158,7 @@ RETURN
 )
 GO
 
-CREATE FUNCTION dbo.fxGetPedidosByUsuario(@Id int)
+CREATE FUNCTION [dbo].[fxGetPedidosByUsuario](@Id int)
 RETURNS TABLE
 AS
 RETURN
@@ -181,8 +181,9 @@ RETURN
     --JOIN dbo.Usuarios U ON U.Id = P.IdUsuario
     JOIN dbo.Estatus E ON E.Id = P.IdStatus
     WHERE P.IdUsuario = @Id
-	AND P.TipoPedido = 'C'
+	--AND P.TipoPedido = 'C'
 )
+
 
 ---Para correcciones en llaves primaria identity 1,1
 /*
