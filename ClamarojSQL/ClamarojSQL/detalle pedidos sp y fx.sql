@@ -61,8 +61,8 @@ BEGIN
 END
 GO
 
--- Función para obtener todos los detalles de pedido
-CREATE FUNCTION dbo.fxGetDetallesPedido(@IdPedido int)
+-- Funciï¿½n para obtener todos los detalles de pedido
+ALTER FUNCTION dbo.fxGetDetallesPedido(@IdPedido int)
 RETURNS TABLE
 AS
 RETURN
@@ -70,16 +70,18 @@ RETURN
     SELECT IdDetallePedido AS idDetallePedido, 
            Fecha, 
            IdPedido AS idPedido, 
-           IdProducto AS idProducto, 
-           Cantidad, 
+           P.IdProducto AS idProducto, 
+           P.Nombre AS nombre,
+           Cantidad AS cantidad,
            PrecioUnitario AS precioUnitario, 
-           Subtotal
-    FROM dbo.DetallePedidos
+           Subtotal AS subtotal
+    FROM dbo.DetallePedidos DP
+    JOIN dbo.Productos P ON P.IdProducto = DP.IdProducto
 	WHERE IdPedido = @IdPedido
 )
 GO
 
--- Función para obtener un detalle de pedido por su ID
+-- Funciï¿½n para obtener un detalle de pedido por su ID
 CREATE FUNCTION dbo.fxGetDetallePedido(@IdPedido int, @Id int)
 RETURNS TABLE
 AS

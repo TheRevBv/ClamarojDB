@@ -6,7 +6,7 @@ SELECT * FROM dbo.Compras
 SELECT * FROM dbo.Ventas
 GO
 -- Procedimiento almacenado para insertar o actualizar un pedido
-CREATE PROCEDURE dbo.PedidosUPD
+ALTER PROCEDURE dbo.PedidosUPD
     @Id int out,
     @IdUsuario int,
     @IdStatus int,
@@ -65,6 +65,8 @@ BEGIN
 
 			EXEC dbo.VentasUPD @IdIns, @Id, @Fecha, @IdCliente, @Total
 		END
+            
+            
     END
     ELSE
     BEGIN
@@ -90,6 +92,8 @@ BEGIN
 
 			EXEC dbo.VentasUPD @IdIns, @Id, @Fecha, @IdCliente, @Total
 		END
+
+        
     END
 	--EXEC dbo.DetallePedidosUPD @Id,@Id
 END
@@ -158,12 +162,12 @@ RETURN
 )
 GO
 
-CREATE FUNCTION [dbo].[fxGetPedidosByUsuario](@Id int)
+ALTER FUNCTION [dbo].[fxGetPedidosByUsuario](@Id int)
 RETURNS TABLE
 AS
 RETURN
 (
-    SELECT P.IdPedido AS idPedido, 
+   SELECT distinct P.IdPedido AS idPedido, 
            P.IdUsuario AS idUsuario,
            P.IdStatus as idStatus,
            P.Fecha as fecha, 
@@ -176,10 +180,17 @@ RETURN
            TRIM(P.TipoEnvio) as tipoEnvio, 
            TRIM(P.TipoPedido) as tipoPedido,
            P.Total as total,
-		   E.Nombre as estatus
+		   E.Nombre as estatus,
+		   DP.IdProducto,
+		   pr.Nombre,
+		   DP.Cantidad,
+		   DP.PrecioUnitario,
+		   DP.Subtotal
     FROM dbo.Pedidos P
     --JOIN dbo.Usuarios U ON U.Id = P.IdUsuario
     JOIN dbo.Estatus E ON E.Id = P.IdStatus
+	inner join DetallePedidos DP ON DP.IdPedido=P.IdPedido
+	inner join Productos PR on PR.IdProducto= DP.IdProducto
     WHERE P.IdUsuario = @Id
 	--AND P.TipoPedido = 'C'
 )
