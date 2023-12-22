@@ -6,7 +6,7 @@ SELECT * FROM dbo.Compras
 SELECT * FROM dbo.Ventas
 GO
 -- Procedimiento almacenado para insertar o actualizar un pedido
-ALTER PROCEDURE dbo.PedidosUPD
+CREATE PROCEDURE dbo.PedidosUPD
     @Id int out,
     @IdUsuario int,
     @IdStatus int,
@@ -28,7 +28,7 @@ BEGIN
 	DECLARE @IdIns INT, @IdProveedor int, @IdCliente int 
 	SET @Total = 0
 
-	DELETE FROM dbo.DetallePedidos WHERE IdPedido = @Id AND Fecha = @Fecha
+	--DELETE FROM dbo.DetallePedidos WHERE IdPedido = @Id AND Fecha = @Fecha
 
     IF EXISTS(SELECT * FROM dbo.Pedidos WHERE IdPedido = @Id)
     BEGIN
@@ -162,7 +162,7 @@ RETURN
 )
 GO
 
-ALTER FUNCTION [dbo].[fxGetPedidosByUsuario](@Id int)
+CREATE FUNCTION [dbo].[fxGetPedidosByUsuario](@Id int)
 RETURNS TABLE
 AS
 RETURN

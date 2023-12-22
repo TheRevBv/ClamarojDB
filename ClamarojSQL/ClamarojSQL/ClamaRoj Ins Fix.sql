@@ -459,14 +459,15 @@ VALUES
 --DROP CONSTRAINT FK_Compras_Pedidos_IdPedido_Fecha;
 
 select * from Pedidos
+where TipoPedido = 'C'
 select * from Compras
 
 INSERT INTO Compras (Fecha, IdPedido, IdProveedor, Total)
-SELECT TOP 16 PT.Fecha, PT.IdPedido, P.IdProveedor, PT.Total + 30
+SELECT PT.Fecha, PT.IdPedido, P.IdProveedor, PT.Total + 30
 FROM Pedidos PT
 JOIN dbo.Proveedores P
 ON P.IdUsuario = PT.IdUsuario
-
+where PT.TipoPedido = 'C'
 
 --VALUES
 --    ('2023-05-01',1 ,  1, 100.00),
@@ -869,12 +870,46 @@ VALUES
 -- 244
 
 ------------ INSERCIONES VENTAS -------------------------
-ALTER TABLE dbo.Ventas
-DROP CONSTRAINT FK_Ventas_Pedidos_IdPedido_Fecha;
+--ALTER TABLE dbo.Ventas
+--DROP CONSTRAINT FK_Ventas_Pedidos_IdPedido_Fecha;
 
 --ALTER TABLE dbo.Ventas
 --DROP CONSTRAINT FK_Ventas_Clientes_IdCliente
 -- MES MAYO
+
+select * FROM Pedidos PT
+where TipoPedido = 'V'
+
+select * from Ventas
+
+update Pedidos
+set IdUsuario = IdUsuario - 12
+where IdPedido in 
+(138,139,140,141)
+
+update Pedidos
+set IdUsuario = IdUsuario - 8
+where IdPedido in 
+--(138,139,140,141)
+(72,73 ,74 ,75)
+--(76 ,77 ,78 ,79 ) 
+--(134,135,136,137) 
+
+update Pedidos
+set IdUsuario = IdUsuario - 9
+where IdPedido in 
+--(138,139,140,141)
+--(72,73 ,74 ,75)
+(76 ,77 ,78 ,79 ) 
+--(134,135,136,137) 
+
+update Pedidos
+set IdUsuario = IdUsuario - 10
+where IdPedido in 
+--(138,139,140,141)
+--(72,73 ,74 ,75)
+--(76 ,77 ,78 ,79 ) 
+(134,135,136,137) 
 
 INSERT INTO Ventas (Fecha, IdPedido, IdCliente, Total)
 SELECT PT.Fecha, PT.IdPedido, C.IdCliente, PT.Total + 30
@@ -884,256 +919,14 @@ ON C.IdUsuario = PT.IdUsuario
 AND PT.TipoPedido = 'V'
 --ORDER BY 3,1
 
-/*
-INSERT INTO Ventas (Fecha, IdCliente, IdPedido, Total)
-VALUES
-    ('2023-05-01', 4, 17, 150.75),
-    ('2023-05-02', 5, 18, 200.00),
-    ('2023-05-03', 6, 19, 75.50),
-    ('2023-05-04', 7, 20, 300.25),
-    ('2023-05-05', 8, 21, 125.00),
-    ('2023-05-06', 9, 22, 180.50),
-    ('2023-05-07', 10, 23, 90.75),
-    ('2023-05-08', 11, 24, 150.00),
-    ('2023-05-09', 12, 25, 220.25),
-    ('2023-05-10', 13, 26, 80.50),
-    ('2023-05-11', 14, 27, 175.75),
-    ('2023-05-12', 15, 28, 130.00),
-    ('2023-05-13', 16, 29, 210.25),
-    ('2023-05-14', 17, 30, 95.50),
-    ('2023-05-15', 18, 31, 160.75),
-    ('2023-05-16', 19, 32, 180.00),
-    ('2023-05-17', 20, 33, 240.25),
-    ('2023-05-18', 21, 34, 120.50),
-    ('2023-05-19', 22, 35, 195.75),
-    ('2023-05-20', 23, 36, 150.00),
-    ('2023-05-21', 24, 37, 120.50),
-    ('2023-05-22', 25, 38, 180.75),
-    ('2023-05-23', 26, 39, 250.00),
-    ('2023-05-24', 27, 40, 95.25),
-    ('2023-05-25', 28, 41, 140.50),
-    ('2023-05-26', 29, 42, 200.75),
-    ('2023-05-27', 30, 43, 110.00),
-    ('2023-05-28', 31, 44, 165.25),
-    ('2023-05-29', 32, 45, 220.50),
-    ('2023-05-30', 33, 46, 135.75),
-    ('2023-05-31', 34, 47, 250.00),
-    ('2023-05-01', 35, 48, 120.25),
-    ('2023-05-02', 36, 49, 180.50),
-    ('2023-05-03', 37, 50, 210.75),
-    ('2023-05-04', 38, 51, 95.00),
-    ('2023-05-05', 39, 52, 145.25),
-    ('2023-05-06', 40, 53, 230.50),
-    ('2023-05-07', 41, 54, 110.75),
-    ('2023-05-08', 42, 55, 175.00),
-    ('2023-05-09', 43, 56, 140.25),
-    ('2023-05-10', 44, 57, 120.50),
-    ('2023-05-11', 45, 58, 180.75),
-    ('2023-05-12', 46, 59, 250.00),
-    ('2023-05-13', 47, 60, 95.25),
-    ('2023-05-14', 48, 61, 140.50),
-    ('2023-05-15', 49, 62, 200.75),
-    ('2023-05-16', 50, 63, 110.00),
-    ('2023-05-17', 51, 64, 165.25),
-    ('2023-05-18', 52, 65, 220.50),
-    ('2023-05-19', 53, 66, 135.75),
-    ('2023-05-20', 54, 67, 250.00),
-    ('2023-05-21', 55, 68, 120.25),
-    ('2023-05-22', 56, 69, 180.50),
-    ('2023-05-23', 4, 70, 210.75),
-    ('2023-05-24', 5, 71, 95.00),
-    ('2023-05-25', 6, 72, 145.25),
-    ('2023-05-26', 7, 73, 230.50),
-    ('2023-05-27', 8, 74, 110.75),
-    ('2023-05-28', 9, 75, 175.00),
-    ('2023-05-29', 10, 76, 140.25), 
-	('2023-05-30', 11, 77, 200.50),
-    ('2023-05-31', 12, 78, 150.75),
-    ('2023-05-15', 13, 79, 185.00),
-    ('2023-05-16', 14, 80, 120.25);
-
--- MES JUNIO
-INSERT INTO Ventas (Fecha, IdCliente, IdPedido, Total)
-VALUES
-    ('2023-06-05', 15, 81, 250.00),
-    ('2023-06-10', 16, 82, 180.50),
-    ('2023-06-12', 17, 83, 300.25),
-    ('2023-06-15', 18, 84, 210.75),
-    ('2023-06-18', 19, 85, 170.00),
-    ('2023-06-20', 20, 86, 225.50),
-    ('2023-06-23', 21, 87, 190.25),
-    ('2023-06-25', 22, 88, 280.75),
-    ('2023-06-28', 23, 89, 195.00),
-    ('2023-06-30', 24, 90, 215.50),
-    ('2023-06-10', 25, 91, 175.25),
-    ('2023-06-12', 26, 92, 230.00),
-    ('2023-06-15', 27, 93, 290.50),
-    ('2023-06-18', 28, 94, 210.25),
-    ('2023-06-20', 29, 95, 180.75),
-    ('2023-06-23', 30, 96, 245.00),
-    ('2023-06-25', 31, 97, 270.50),
-    ('2023-06-28', 32, 98, 225.25),
-    ('2023-06-30', 33, 99, 195.00),
-    ('2023-06-10', 34, 100, 215.50),
-    ('2023-06-03', 35, 101, 230.00),
-    ('2023-06-06', 36, 102, 180.50),
-    ('2023-06-09', 37, 103, 300.25),
-    ('2023-06-12', 38, 104, 210.75),
-    ('2023-06-15', 39, 105, 170.00),
-    ('2023-06-18', 40, 106, 225.50),
-    ('2023-06-21', 41, 107, 190.25),
-    ('2023-06-24', 42, 108, 280.75),
-    ('2023-06-27', 43, 109, 195.00),
-    ('2023-06-30', 44, 110, 215.50),
-    ('2023-06-04', 45, 111, 175.25),
-    ('2023-06-07', 46, 112, 230.00),
-    ('2023-06-10', 47, 113, 290.50),
-    ('2023-06-13', 48, 114, 210.25),
-    ('2023-06-16', 49, 115, 180.75),
-    ('2023-06-19', 50, 116, 245.00),
-    ('2023-06-22', 51, 117, 270.50),
-    ('2023-06-25', 52, 118, 225.25),
-    ('2023-06-28', 53, 119, 195.00),
-    ('2023-06-30', 54, 120, 215.50),
-    ('2023-06-03', 55, 121, 230.00),
-    ('2023-06-06', 56, 122, 180.50),
-    ('2023-06-09', 57, 123, 300.25),
-    ('2023-06-12', 58, 124, 210.75),
-    ('2023-06-15', 59, 125, 170.00),
-    ('2023-06-18', 60, 126, 225.50),
-    ('2023-06-21', 61, 127, 190.25),
-    ('2023-06-24', 62, 128, 280.75),
-    ('2023-06-27', 63, 129, 195.00),
-    ('2023-06-30', 64, 130, 215.50),
-    ('2023-06-04', 4, 131, 175.25),
-    ('2023-06-07', 5, 132, 230.00),
-    ('2023-06-10', 6, 133, 290.50),
-    ('2023-06-13', 7, 134, 210.25),
-    ('2023-06-16', 8, 135, 180.75),
-    ('2023-06-19', 9, 136, 245.00),
-    ('2023-06-22', 10, 137, 270.50),
-    ('2023-06-25', 11, 138, 225.25),
-    ('2023-06-28', 12, 139, 195.00),
-    ('2023-06-30', 13, 140, 215.50),
-    ('2023-06-02', 14, 141, 185.00),
-    ('2023-06-05', 15, 142, 240.50),
-    ('2023-06-08', 16, 143, 310.25),
-    ('2023-06-11', 17, 144, 220.75),
-    ('2023-06-14', 18, 145, 180.00),
-    ('2023-06-17', 19, 146, 235.50),
-    ('2023-06-20', 20, 147, 200.25),
-    ('2023-06-23', 21, 148, 290.75),
-    ('2023-06-26', 22, 149, 205.00),
-    ('2023-06-29', 23, 150, 225.50),
-    ('2023-06-02', 24, 151, 170.25),
-    ('2023-06-05', 25, 152, 225.00),
-    ('2023-06-08', 26, 153, 275.50),
-    ('2023-06-11', 27, 154, 195.25),
-    ('2023-06-14', 28, 155, 165.75),
-    ('2023-06-17', 29, 156, 220.00),
-    ('2023-06-20', 30, 157, 245.50),
-    ('2023-06-23', 31, 158, 210.25);
-
--- MES JULIO
-INSERT INTO Ventas (Fecha, IdCliente, IdPedido, Total)
-VALUES
-    ('2023-07-02', 32, 161, 180.00),
-    ('2023-07-05', 33, 162, 235.50),
-    ('2023-07-08', 34, 163, 200.25),
-    ('2023-07-11', 35, 164, 290.75),
-    ('2023-07-14', 36, 165, 205.00),
-    ('2023-07-17', 37, 166, 225.50),
-    ('2023-07-20', 38, 167, 170.25),
-    ('2023-07-23', 39, 168, 225.00),
-    ('2023-07-26', 40, 169, 275.50),
-    ('2023-07-29', 41, 170, 195.25),
-    ('2023-07-02', 42, 171, 165.75),
-    ('2023-07-05', 43, 172, 220.00),
-    ('2023-07-08', 44, 173, 245.50),
-    ('2023-07-11', 45, 174, 210.25),
-    ('2023-07-14', 46, 175, 180.00),
-    ('2023-07-17', 47, 176, 235.50),
-    ('2023-07-20', 48, 177, 200.25),
-    ('2023-07-23', 49, 178, 290.75),
-    ('2023-07-26', 50, 179, 205.00),
-    ('2023-07-29', 51, 180, 225.50),
-    ('2023-07-02', 52, 181, 180.00),
-    ('2023-07-05', 53, 182, 235.50),
-    ('2023-07-08', 54, 183, 200.25),
-    ('2023-07-11', 55, 184, 290.75),
-    ('2023-07-14', 56, 185, 205.00),
-    ('2023-07-17', 57, 186, 225.50),
-    ('2023-07-20', 58, 187, 170.25),
-    ('2023-07-23', 59, 188, 225.00),
-    ('2023-07-26', 60, 189, 275.50),
-    ('2023-07-29', 61, 190, 195.25),
-    ('2023-07-02', 62, 191, 165.75),
-    ('2023-07-05', 63, 192, 220.00),
-    ('2023-07-08', 64, 193, 245.50),
-    ('2023-07-11', 4, 194, 210.25),
-    ('2023-07-14', 5, 195, 180.00),
-    ('2023-07-17', 6, 196, 235.50),
-    ('2023-07-20', 7, 197, 200.25),
-    ('2023-07-23', 8, 198, 290.75),
-    ('2023-07-26', 9, 199, 205.00),
-    ('2023-07-29', 10, 200, 225.50),
-    ('2023-07-02', 11, 201, 180.00),
-    ('2023-07-05', 12, 202, 235.50),
-    ('2023-07-08', 13, 203, 200.25),
-    ('2023-07-11', 14, 204, 290.75),
-    ('2023-07-14', 15, 205, 205.00),
-    ('2023-07-17', 16, 206, 225.50),
-    ('2023-07-20', 17, 207, 170.25),
-    ('2023-07-23', 18, 208, 225.00),
-    ('2023-07-26', 19, 209, 275.50),
-    ('2023-07-29', 20, 210, 195.25),
-    ('2023-07-02', 21, 211, 165.75),
-    ('2023-07-05', 22, 212, 220.00),
-    ('2023-07-08', 23, 213, 245.50),
-    ('2023-07-11', 24, 214, 210.25),
-    ('2023-07-14', 25, 215, 180.00),
-    ('2023-07-17', 26, 216, 235.50),
-    ('2023-07-20', 27, 217, 200.25),
-    ('2023-07-23', 28, 218, 290.75),
-    ('2023-07-26', 29, 219, 205.00),
-    ('2023-07-29', 30, 220, 225.50),
-    ('2023-07-02', 31, 221, 180.00),
-    ('2023-07-05', 32, 222, 235.50),
-    ('2023-07-08', 33, 223, 200.25),
-    ('2023-07-11', 34, 224, 290.75),
-    ('2023-07-14', 35, 225, 205.00),
-    ('2023-07-17', 36, 226, 225.50),
-    ('2023-07-20', 37, 227, 170.25),
-    ('2023-07-23', 38, 228, 225.00),
-    ('2023-07-26', 39, 229, 275.50),
-    ('2023-07-29', 40, 230, 195.25),
-    ('2023-07-02', 41, 231, 165.75),
-    ('2023-07-05', 42, 232, 220.00),
-    ('2023-07-08', 43, 233, 245.50),
-    ('2023-07-11', 44, 234, 210.25),
-    ('2023-07-14', 45, 235, 180.00),
-    ('2023-07-17', 46, 236, 235.50),
-    ('2023-07-20', 47, 237, 200.25),
-    ('2023-07-23', 48, 238, 290.75),
-    ('2023-07-26', 49, 239, 205.00),
-    ('2023-07-29', 50, 240, 225.50),
-    ('2023-07-02', 51, 241, 180.00),
-    ('2023-07-05', 52, 242, 235.50),
-    ('2023-07-08', 53, 243, 200.25),
-    ('2023-07-11', 54, 244, 290.75),
-    ('2023-07-14', 55, 245, 205.00),
-    ('2023-07-17', 56, 246, 225.50);
-
-*/
-
 ---------------INSERCION DETALLEPEDIDOS DE TIPO PROVEEDORES   ----------------------
 
 
 select * from DetallePedidos -- Proveedores
 select * from Pedidos -- 1-16
 select * from MateriasPrimas --- 1-26
-ALTER TABLE dbo.DetallePedidos
-DROP CONSTRAINT FK_DetallePedido_Pedido;
+--ALTER TABLE dbo.DetallePedidos
+--DROP CONSTRAINT FK_DetallePedido_Pedido;
 --delete from DetallePedidos
 --DBCC CHECKIDENT ('DetallePedidos', RESEED, 0);
                
@@ -1406,8 +1199,8 @@ VALUES
 
 select * from Pedidos
 select * from DetallePedidos
-
-	----- ESTOS UPDATES SON NECESARIOS PARA QUE CUADREN CON LA FECHA DE DETALLEPEDIDO---
+----- ESTOS UPDATES SON NECESARIOS PARA QUE CUADREN CON LA FECHA DE DETALLEPEDIDO---
+/*	
 DECLARE @contador INT
 DECLARE @IDP INT
 SET @contador = 0;
@@ -1420,7 +1213,10 @@ BEGIN
 	SET @IDP= @IDP+1
 	PRINT @IDP
 	PRINT 'FECHA 0'+CAST(@contador AS VARCHAR)
-	update Pedidos set Fecha=CONCAT('2023-06-',@contador), FechaEntrega=CONCAT('2023-06-',@contador) where IdPedido =@IDP
+	update Pedidos set 
+    Fecha = CAST(CONCAT('2023-06-',CAST(@contador AS VARCHAR)) AS DATETIME), 
+    FechaEntrega = CAST(CONCAT('2023-06-', CAST(@contador AS VARCHAR)) AS DATETIME)
+    where IdPedido =@IDP
 END
 
 DECLARE @contador2 INT
@@ -1435,7 +1231,10 @@ BEGIN
 	SET @IDP2= @IDP2+1
 	PRINT @IDP2
 	PRINT 'FECHA 0'+CAST(@contador2 AS VARCHAR)
-	update Pedidos set Fecha=CONCAT('2023-06-',@contador2), FechaEntrega=CONCAT('2023-06-',@contador2) where IdPedido =@IDP2
+	update Pedidos set 
+    Fecha = CAST(CONCAT('2023-06-', CAST(@contador2 AS VARCHAR)) AS DATETIME), 
+    FechaEntrega = CAST(CONCAT('2023-06-', CAST(@contador2 AS VARCHAR)) AS DATETIME)
+    where IdPedido =@IDP2
 END
 
 DECLARE @contador3 INT
@@ -1450,7 +1249,10 @@ BEGIN
 	SET @IDP3= @IDP3+1
 	PRINT @IDP3
 	PRINT 'FECHA 0'+CAST(@contador3 AS VARCHAR)
-	update Pedidos set Fecha=CONCAT('2023-07-',@contador3), FechaEntrega=CONCAT('2023-07-',@contador3) where IdPedido =@IDP3
+	update Pedidos set 
+    Fecha = CAST(CONCAT('2023-07-', CAST(@contador3 AS VARCHAR)) AS DATETIME), 
+    FechaEntrega = CAST(CONCAT('2023-07-', CAST(@contador3 AS VARCHAR)) AS DATETIME)
+    where IdPedido =@IDP3
 END
 
 DECLARE @contador4 INT
@@ -1465,7 +1267,10 @@ BEGIN
 	SET @IDP4= @IDP4+1
 	PRINT @IDP4
 	PRINT 'FECHA 0'+CAST(@contador4 AS VARCHAR)
-	update Pedidos set Fecha=CONCAT('2023-07-',@contador4), FechaEntrega=CONCAT('2023-07-',@contador4) where IdPedido =@IDP4
+	update Pedidos set 
+    Fecha = CAST(CONCAT('2023-07-',CAST(@contador4 AS VARCHAR)) AS DATETIME), 
+    FechaEntrega = CAST(CONCAT('2023-07-',CAST(@contador4 AS VARCHAR)) AS DATETIME)
+    where IdPedido =@IDP4
 END
 
 DECLARE @contador5 INT
@@ -1480,7 +1285,10 @@ BEGIN
 	SET @IDP5= @IDP5+1
 	PRINT @IDP5
 	PRINT 'FECHA 0'+CAST(@contador5 AS VARCHAR)
-	update Pedidos set Fecha=CONCAT('2023-05-',@contador5), FechaEntrega=CONCAT('2023-05-',@contador5) where IdPedido =@IDP5
+	update Pedidos set 
+    Fecha = CAST(CONCAT('2023-05-', cast(@contador5 as varchar)) AS DATETIME), 
+    FechaEntrega = CAST(CONCAT('2023-05-', cast(@contador5 as varchar)) AS DATETIME)
+    where IdPedido =@IDP5
 END
 
 DECLARE @contador6 INT
@@ -1495,7 +1303,10 @@ BEGIN
 	SET @IDP6= @IDP6+1
 	PRINT @IDP6
 	PRINT 'FECHA 0'+CAST(@contador6 AS VARCHAR)
-	update Pedidos set Fecha=CONCAT('2023-05-',@contador6), FechaEntrega=CONCAT('2023-05-',@contador6) where IdPedido =@IDP6
+	update Pedidos set 
+    Fecha = CAST(CONCAT('2023-05-', cast(@contador6 as varchar)) AS DATETIME), 
+    FechaEntrega = CAST(CONCAT('2023-05-', cast(@contador6 as varchar)) AS DATETIME) 
+    where IdPedido =@IDP6
 END
 
 update Pedidos set Fecha='2023-05-01', FechaEntrega='2023-05-01' where IdPedido =79
@@ -1513,7 +1324,10 @@ BEGIN
 	SET @IDP7= @IDP7+1
 	PRINT @IDP7
 	PRINT 'FECHA 0'+CAST(@contador7 AS VARCHAR)
-	update Pedidos set Fecha=CONCAT('2023-07-',@contador7), FechaEntrega=CONCAT('2023-07-',@contador7) where IdPedido =@IDP7
+	update Pedidos set 
+    Fecha = CAST(CONCAT('2023-07-', cast(@contador7 as varchar)) AS DATETIME), 
+    FechaEntrega = CAST(CONCAT('2023-07-', cast(@contador7 as varchar)) AS DATETIME) 
+    where IdPedido =@IDP7
 END
 
 DECLARE @contador8 INT
@@ -1528,10 +1342,25 @@ BEGIN
 	SET @IDP8= @IDP8+1
 	PRINT @IDP8
 	PRINT 'FECHA 0'+CAST(@contador8 AS VARCHAR)
-	update Pedidos set Fecha=CONCAT('2023-07-',@contador8), FechaEntrega=CONCAT('2023-07-',@contador8) where IdPedido =@IDP8
+	update Pedidos set 
+	Fecha = CAST(CONCAT('2023-07-', cast(@contador8 as varchar)) AS DATETIME), 
+	FechaEntrega = CAST(CONCAT('2023-07-', cast(@contador8 as varchar)) AS DATETIME) 
+	where IdPedido = @IDP8
 END
-select * from pedidos
+*/
 
+select IdPedido, Fecha
+into #DtaPed
+from pedidos
+
+update DetallePedidos
+set Fecha = d.Fecha
+FROM DetallePedidos DP
+join #DtaPed d on DP.IdPedido = d.IdPedido
+
+drop table #DtaPed
+
+--INSERCIONES DE PEDIDOS DE COMPRA
 
 GO
 INSERT INTO Pedidos (IdPedido, Fecha, IdUsuario, IdStatus, FechaEntrega, Domicilio, Telefono, RazonSocial, Rfc, TipoPago, TipoEnvio, TipoPedido, Total)
@@ -1561,6 +1390,32 @@ VALUES
     (264, '2023-07-10', 58, 1, '2023-05-14', 'Calle Zacatecas - Colonia La Brisa', '4770123456', 'Proveedor10', 'RFC101010A10', 'TC', 'T', 'C', 250.75+20);
 GO
 
+--INSERCION DETALLES DE COMPRAS
+WITH PedidosConNumeracion AS (
+    SELECT P.IdPedido, P.Fecha,
+           ROW_NUMBER() OVER (ORDER BY P.IdPedido) as rn_pedido
+    FROM Pedidos P
+     LEFT JOIN DetallePedidos DP ON P.IdPedido = DP.IdPedido AND P.Fecha = DP.Fecha
+     WHERE DP.IdPedido IS NULL  -- Si no necesitas unir con DetallePedidos, comenta estas líneas
+),
+
+ProductosConNumeracion AS (
+    SELECT TOP 
+	20 M.Id as IdProducto, M.Precio, M.Stock as Cantidad,ROW_NUMBER() OVER (ORDER BY M.Id ASC) as rn_producto
+    FROM MateriasPrimas M
+)
+
+INSERT INTO dbo.DetallePedidos(IdPedido, Fecha, IdProducto, PrecioUnitario, Cantidad, Subtotal)
+SELECT PCN.IdPedido, PCN.Fecha, PCN.IdProducto, PCN.Precio, PCN.Cantidad, PCN.Precio * PCN.Cantidad as subtotal
+FROM (
+    SELECT P.IdPedido, P.Fecha, M.IdProducto, M.Precio, M.Cantidad
+    FROM PedidosConNumeracion P
+    JOIN ProductosConNumeracion M
+    ON P.rn_pedido = M.rn_producto
+) PCN
+
+--INSERCIONES DE COMPRAS
+
 INSERT INTO Compras (Fecha, IdPedido, IdProveedor, Total)
 SELECT  PT.Fecha, PT.IdPedido, P.IdProveedor, PT.Total + 30
 FROM Pedidos PT
@@ -1570,3 +1425,162 @@ where IdPedido>254
 
 UPDATE Productos
 SET Foto = CONCAT(Nombre,'.png')
+
+INSERT INTO Recetas (Codigo, Costo, Cantidad, IdProducto, IdStatus, FechaRegistro, FechaModificacion)
+VALUES  ('REC-ENDIABLADA', 3.80, 1, 8, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-CACAHUATADA', 4.25, 1, 9, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-LAGUNA', 2.90, 1, 10, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-SABRIMEDUSA', 3.80, 1, 11, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-TEQUILA', 4.25, 1, 12, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-PAPAENCHIL', 2.90, 1, 13, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-CRERICOT', 3.80, 1, 14, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-SABRICHEESE', 3.80, 1, 15, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-MACHOLADA', 4.25, 1, 16, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-SABRILOCA', 2.90, 1, 17, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-CAMARONCHELA', 3.80, 1, 18, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-SABRICHIL', 4.25, 1, 19, 1, '2023-05-01', '2023-05-01'),
+	   ('REC-GOMILOCAS', 2.90, 1, 20, 1, '2023-05-01', '2023-05-01');
+
+
+-- ENDIABLADA
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(8,5 ,200 ),
+		(8, 21,200 ),
+		(8,1,300 ),
+		(8, 25,60 ),
+		(8, 22,45 ),
+		(8, 14, 15),
+		(8, 23, 5);
+
+-- CACAHUATADA
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(9,5 ,200 ),
+		(9, 21,200 ),
+		(9,1,300 ),
+		(9, 25,60 ),
+		(9, 22,45 ),
+		(9, 14, 15),
+		(9, 23, 5);
+
+-- LAGUNA
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(10,5 ,200 ),
+		(10, 21,200 ),
+		(10,1,300 ),
+		(10, 25,60 ),
+		(10, 22,45 ),
+		(10, 14, 15),
+		(10, 23, 5);
+
+-- SABRIMEDUSA
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(11,5 ,200 ),
+		(11, 21,200 ),
+		(11,1,300 ),
+		(11, 25,60 ),
+		(11, 22,45 ),
+		(11, 14, 15),
+		(11, 23, 5);
+
+-- TEQUILA
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(12,5 ,200 ),
+		(12, 21,200 ),
+		(12,1,300 ),
+		(12, 25,60 ),
+		(12, 22,45 ),
+		(12, 14, 15),
+		(12, 23, 5);
+
+-- PAPAENCHIL
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(13,5 ,200 ),
+		(13, 21,200 ),
+		(13,1,300 ),
+		(13, 25,60 ),
+		(13, 22,45 ),
+		(13, 14, 15),
+		(13, 23, 5);
+
+-- CRERICOT
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(14,5 ,200 ),
+		(14, 21,200 ),
+		(14,1,300 ),
+		(14, 25,60 ),
+		(14, 22,45 ),
+		(14, 14, 15),
+		(14, 23, 5);
+
+-- SABRICHEESE
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(15,5 ,200 ),
+		(15, 21,200 ),
+		(15,1,300 ),
+		(15, 25,60 ),
+		(15, 22,45 ),
+		(15, 14, 15),
+		(15, 23, 5);
+
+-- MACHOLADA
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(16,5 ,200 ),
+		(16, 21,200 ),
+		(16,1,300 ),
+		(16, 25,60 ),
+		(16, 22,45 ),
+		(16, 14, 15),
+		(16, 23, 5);
+
+-- SABRILOCA
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(17,5 ,200 ),
+		(17, 21,200 ),
+		(17,1,300 ),
+		(17, 25,60 ),
+		(17, 22,45 ),
+		(17, 14, 15),
+		(17, 23, 5);
+
+-- CAMARONCHELA
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(18,5 ,200 ),
+		(18, 21,200 ),
+		(18,1,300 ),
+		(18, 25,60 ),
+		(18, 22,45 ),
+		(18, 14, 15),
+		(18, 23, 5);
+
+-- SABRICHIL
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(19,5 ,200 ),
+		(19, 21,200 ),
+		(19,1,300 ),
+		(19, 25,60 ),
+		(19, 22,45 ),
+		(19, 14, 15),
+		(19, 23, 5);
+
+-- GOMILOCAS
+INSERT INTO Ingrediente (IdReceta,IdMateriaPrima, Cantidad)
+VALUES 
+		(20,5 ,200 ),
+		(20, 21,200 ),
+		(20,1,300 ),
+		(20, 25,60 ),
+		(20, 22,45 ),
+		(20, 14, 15),
+		(20, 23, 5);
